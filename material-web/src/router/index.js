@@ -48,6 +48,12 @@ export const asyncRouterMap = [
     children: [
      {path: '/dashboard',name: 'Dashboard',icon:'speedometer',component: _import('Dashboard')},
      {path: '/introduction',name: '介绍',icon:'thumbsup',component: _import('Introduction')},
+	 {path: '/itemsManage',name: '商品管理',redirect: '/itemsManage/itemTable',icon:'speedometer',
+	 		component: {render (c) { return c('router-view') }},
+	 		children: [ {path: 'itemTable',name: '商品查询',icon:'speedometer',component: _import('itemsManage/itemTable'), hidden:false },
+	 					{path: 'buttons',name: 'Buttons按钮',icon:'social-youtube',component: _import('components/Buttons') }
+	 		]
+	 },
      {path: '/components',name: 'component组件',redirect: '/components/buttons',icon:'bookmark',
         component: {render (c) { return c('router-view') }},
         children: [ {path: 'buttons',name: 'Buttons按钮',icon:'social-youtube',component: _import('components/Buttons'), hidden:false, },
