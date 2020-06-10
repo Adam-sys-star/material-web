@@ -48,10 +48,9 @@ export const asyncRouterMap = [
     children: [
      {path: '/dashboard',name: 'Dashboard',icon:'speedometer',component: _import('Dashboard')},
      {path: '/introduction',name: '介绍',icon:'thumbsup',component: _import('Introduction')},
-	 {path: '/itemsManage',name: '商品管理',redirect: '/itemsManage/itemTable',icon:'speedometer',
+	 {path: '/itemsManage',name: '商品管理',redirect: '/itemsManage/itemTable',icon:'speedometer',meta: { role:["商品管理人员"] },
 	 		component: {render (c) { return c('router-view') }},
-	 		children: [ {path: 'itemTable',name: '商品查询',icon:'speedometer',component: _import('itemsManage/itemTable'), hidden:false },
-	 					{path: 'buttons',name: 'Buttons按钮',icon:'social-youtube',component: _import('components/Buttons') }
+	 		children: [ {path: 'itemTable',name: '商品查询',icon:'speedometer',component: _import('itemsManage/itemTable'), hidden:false }
 	 		]
 	 },
      {path: '/components',name: 'component组件',redirect: '/components/buttons',icon:'bookmark',
@@ -79,7 +78,7 @@ export const asyncRouterMap = [
                     {path: 'cakechart',name: '蛋糕销量图表',icon:'ios-analytics',component: _import('charts/CakeChart')}
                   ]
       },
-      {path: '/table', name: '表格综合实例',icon:'ios-paper',component: _import('Table'),meta: { role: ['admin'] }},
+      {path: '/table', name: '表格综合实例',icon:'ios-paper',component: _import('Table'),meta: { role:["超级管理员"] }},
       {path: '/jsontree', name: 'JSON视图',icon:'merge',component: _import('JsonTree')},
       {path: '/tabledetail/:id',name: 'TableDetail', hidden:true, component: _import('TableDetail')},
       // {path: '/tinymce',name: 'Tinymce编辑器',icon:"android-document",component: _import('Tinymce')},

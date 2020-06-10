@@ -1,25 +1,26 @@
 <template>
 	<div>
-		<Table highlight-row  border  ref="currentRowTable" :columns="columns12" :data="data6">
-			<template slot-scope="{ row }" slot="name">
-				<strong>{{ row }}</strong>
-			</template>
-			<template slot-scope="{ row, index }" slot="action">
-				<Button type="primary" size="small" style="margin-right: 5px" @click="show(index)">View</Button>
-				<Button type="error" size="small" @click="remove(index)">Delete</Button>
-			</template>
-		</Table>
-		<Button @click="handleClearCurrentRow">Clear</Button>
+		<Table highlight-row border :columns="columns7" :data="data6"></Table>
 	</div>
 </template>
 <script>
     export default {
         data () {
             return {
-                columns12: [
+                columns7: [
                     {
                         title: 'Name',
-                        slot: 'name'
+                        key: 'name',
+                        render: (h, params) => {
+                            return h('div', [
+                                h('Icon', {
+                                    props: {
+                                        type: 'person'
+                                    }
+                                }),
+                                h('strong', params.row.name)
+                            ]);
+                        }
                     },
                     {
                         title: 'Age',
@@ -31,9 +32,38 @@
                     },
                     {
                         title: 'Action',
-                        slot: 'action',
+                        key: 'action',
                         width: 150,
-                        align: 'center'
+                        align: 'center',
+                        render: (h, params) => {
+                            return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: 'primary',
+                                        size: 'small'
+                                    },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.show(params.index)
+                                        }
+                                    }
+                                }, 'View'),
+                                h('Button', {
+                                    props: {
+                                        type: 'error',
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.remove(params.index)
+                                        }
+                                    }
+                                }, 'Delete')
+                            ]);
+                        }
                     }
                 ],
                 data6: [
@@ -69,10 +99,7 @@
             },
             remove (index) {
                 this.data6.splice(index, 1);
-            },
-			handleClearCurrentRow () {
-				this.$refs.currentRowTable.clearCurrentRow();
-			}
+            }
         }
     }
 </script>

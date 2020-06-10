@@ -288,14 +288,6 @@
      
     </Row>
 
-
-
-
-
-
-   
-
-
   </div>
 </template>
 
@@ -304,7 +296,7 @@ import DashChartCount from './charts/DashChartCount';
 import DashChartVisitor from './charts/DashChartVisitor';
 import DashChartLarge from './charts/DashChartLarge';
 import VueCalendar from './components/VueCalendar';
-import TodoList from '@/components/TodoList'
+import TodoList from '@/components/TodoList';
 
 export default {
   components:{DashChartCount,DashChartVisitor,DashChartLarge,VueCalendar,TodoList},
@@ -328,13 +320,13 @@ export default {
               }
         },
         mounted(){
-                const token=this.$store.getters.token;
-                
+                // const token=this.$store.getters.token;
+                const roles = this.$store.getters.roles;
+				const empName = this.$store.getters.empName;
+				// const introduction = this.$store.getters.introduction;
              this.$Notice.success({
-                    title: '欢迎使用 WZ 框架',
-                    desc:  `你的账户权限是 ${token} 
-                            <br>
-                            喜欢就去github给个 start 鼓励一下吧`,
+                    title: '欢迎 '+empName+' 访问药店管理系统',
+                    desc:  `你的账户权限是   ${roles} `,
                     duration: 10
                 });
 

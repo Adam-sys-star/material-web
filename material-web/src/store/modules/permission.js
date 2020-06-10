@@ -6,8 +6,11 @@ import { asyncRouterMap, constantRouterMap } from 'src/router';
  * @param route
  */
 function hasPermission(roles, route) {
+  //判断route是否有meta 和 meta是否有role
   if (route.meta && route.meta.role) {
-    return roles.some(role => route.meta.role.indexOf(role) >= 0)
+	// console.log(route.meta.role.indexOf(roles) >= 0);
+    return route.meta.role.indexOf(roles) >= 0;
+	return true
   } else {
     return true
   }
@@ -20,6 +23,7 @@ function hasPermission(roles, route) {
  */
 function filterAsyncRouter(asyncRouterMap, roles) {
   const accessedRouters = asyncRouterMap.filter(route => {
+	  
     if (hasPermission(roles, route)) {
 
       if (route.children && route.children.length) {
@@ -31,7 +35,6 @@ function filterAsyncRouter(asyncRouterMap, roles) {
   })
   return accessedRouters
 }
-
 
 function getNowRouter(asyncRouterMap, to) {
   return asyncRouterMap.some(route => {
@@ -84,12 +87,13 @@ const permission = {
 
   },
   actions: {
+	//生成用户的路由
     GenerateRoutes({ commit }, data) {
       return new Promise(resolve => {
         console.info(data)
         const { roles } = data
         let accessedRouters
-        if (roles.indexOf('admin') >= 0) {
+        if (roles.indexOf('超级管理员') >= 0) {
           accessedRouters = asyncRouterMap
         } else {
           accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
