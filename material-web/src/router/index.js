@@ -50,7 +50,8 @@ export const asyncRouterMap = [
      {path: '/introduction',name: '介绍',icon:'thumbsup',component: _import('Introduction')},
 	 {path: '/itemsManage',name: '商品管理',redirect: '/itemsManage/itemTable',icon:'speedometer',meta: { role:["商品管理人员"] },
 	 		component: {render (c) { return c('router-view') }},
-	 		children: [ {path: 'itemTable',name: '商品查询',icon:'speedometer',component: _import('itemsManage/itemTable'), hidden:false }
+	 		children: [ {path: 'itemTable',name: '商品查询',icon:'speedometer',component: _import('itemsManage/itemTable'), hidden:false },
+						{path: 'searchItems',name: '商品搜索',icon:'speedometer',component: _import('itemsManage/searchItems')}
 	 		]
 	 },
      {path: '/components',name: 'component组件',redirect: '/components/buttons',icon:'bookmark',
