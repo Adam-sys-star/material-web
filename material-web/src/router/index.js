@@ -62,6 +62,8 @@ export const asyncRouterMap = [
                     {path: 'card',name: 'Card卡片',icon:'ios-browsers-outline',component: _import('components/Card')},
                     {path: 'datepicker',name: 'DatePicker',icon:'ios-calendar-outline',component: _import('components/DatePicker')},
                     {path: 'form',name: 'Form表单',icon:'ios-list-outline',component: _import('components/Form')},
+					{path: 'employee',name: '员工信息详情',icon:'ios-list-outline',component: _import('components/EmployeeDetail')},
+					{path: 'employees',name: '员工信息',icon:'ios-list-outline',component: _import('components/Employees')},
 					{path: 'modal',name: 'Modal对话框',icon:'ios-chatbubble-outline',component: _import('components/Modal')},
                     {path: 'select',name: 'Select选择器',icon:'ios-arrow-down',component: _import('components/Select')},
                     {path: 'spin',name: 'Spin加载中',icon:'load-d ',component: _import('components/Spin')},
