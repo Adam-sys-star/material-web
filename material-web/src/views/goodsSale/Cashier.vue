@@ -7,7 +7,7 @@
 			<!-- <div slot="footer"></div> -->
 		</Modal>
 		<p>
-			<Input v-model="keyWord" placeholder="请输入商品编号/拼音码/五笔码" style="width: 25%" @on-change="searchItem" />
+			<Input v-model="keyWord" placeholder="请输入商品编号/拼音码/五笔码" style="width: 50%" @on-change="searchItem" />
 			<Input @keyup.enter.native="loadMemberInfo" v-model="memberTelp" placeholder="会员手机号" style="width: 20%; margin-left: 50px;" />
 
 			<Button v-on:click="gotoView('/saleList')" type="warning" style="margin-left: 50px;">申请退货</Button>
