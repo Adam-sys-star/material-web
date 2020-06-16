@@ -103,18 +103,20 @@
                 })
             },
             remove (index) {
-                 // this.data6.splice(index, 1);
+                this.data6.splice(index, 1);
 				deleteById(this.data6[index].id);
 				
-				}
-            },
-			created:function(){
-								getAllEmp().then((response)=>{
-								
-									console.log("aaaaaaaaaaaaaaaaaa",response.data);
-									this.data6=response.data;
-									console.log(response);
-									}).catch(function(err){console.log(err)})
-							}
-        }
+				
+            }
+			
+        },
+		created:function(){
+							getAllEmp().then((response)=>{
+							
+								console.log("aaaaaaaaaaaaaaaaaa",response.data);
+								this.data6=response.data;
+								console.log(response);
+								}).catch(function(err){console.log(err)})
+						}
+	}
 </script>
