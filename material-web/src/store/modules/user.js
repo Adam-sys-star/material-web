@@ -2,21 +2,35 @@ import { loginByUsername, logout, getInfo } from 'api/login';
 import Cookies from 'js-cookie';
 
 const user = {
+// const emp = {
   state: {
-    user: '',
-    status: '',
-    username: '',
-    code: '',
-    uid: undefined,
-    auth_type: '',
-    token: Cookies.get('Admin-Token'),
-    name: '',
-    avatar: '',
-    introduction: '',
-    roles: [],
-    setting: {
-      articlePlatform: []
-    }
+    // user: '',
+    // status: '',
+    // username: '',
+    // code: '',
+    // uid: undefined,
+    // auth_type: '',
+    // token: Cookies.get('Admin-Token'),
+    // name: '',
+    // avatar: '',
+    // introduction: '',
+    // roles: [],
+    // setting: {
+    //   articlePlatform: []
+    // }
+	id: '',
+	empName: '',
+	empSex: '',
+	empBirthday: '',
+	empRole: '',
+	empTelp: '',
+	empJoinDate: '',
+	roles: [],
+	token: Cookies.get('Admin-Token'),
+	status: '',
+	code: '',
+	auth_type: '',
+	name: '',
   },
 
   mutations: {
@@ -58,7 +72,31 @@ const user = {
     },
     LOGOUT_USER: state => {
       state.user = '';
-    }
+    },
+	
+	//设置员工信息
+	SET_ID : (state,id) => {
+		state.id = id;
+	},
+	SET_EMPNAME : (state,empName) => {
+		state.empName = empName;
+	},
+	SET_EMPSEX : (state,empSex) => {
+		state.empSex = empSex;
+	},
+	SET_EMPBIRTHDAY : (state,empBirthday) => {
+		state.empBirthday = empBirthday;
+	},
+	SET_EMPROLE : (state,empRole) => {
+		state.empRole = empRole;
+	},
+	SET_EMPTELP : (state,empTelp) => {
+		state.empTelp = empTelp;
+	},
+	SET_EMPJOINDATE : (state,empJoinDate) => {
+		state.empJoinDate = empJoinDate;
+	}
+	
   },
 
   actions: {
@@ -71,7 +109,8 @@ const user = {
           console.log(response.data);
           Cookies.set('Admin-Token', response.data.token);
           commit('SET_TOKEN', data.token);
-          commit('SET_USERNAME', username);
+          commit('SET_EMPNAME', data.empName);
+		  
           resolve();
         }).catch(error => {
           reject(error);
@@ -85,11 +124,21 @@ const user = {
       return new Promise((resolve, reject) => {
         getInfo(state.token).then(response => {
           const data = response.data;
-          commit('SET_ROLES', data.roles);
-          commit('SET_NAME', data.name);
-          commit('SET_AVATAR', data.avatar);
-          commit('SET_UID', data.uid);
-          commit('SET_INTRODUCTION', data.introduction);
+		  
+		  // console.log(data);
+          // commit('SET_ROLES', data.roles);
+          // commit('SET_NAME', data.name);
+          // commit('SET_AVATAR', data.avatar);
+          // commit('SET_UID', data.uid);
+          // commit('SET_INTRODUCTION', data.introduction);
+		  commit('SET_ID', data.id);
+		  commit('SET_EMPSEX', data.empSex);
+		  commit('SET_EMPBIRTHDAY', data.empBirthday);
+		  commit('SET_ROLES', data.empRole);
+		  commit('SET_EMPTELP', data.empTelp);
+		  commit('SET_EMPJOINDATE', data.empJoinDate);
+		  commit('SET_EMPNAME', data.empName);
+		  
           resolve(response);
         }).catch(error => {
           reject(error);
@@ -116,8 +165,10 @@ const user = {
     LogOut({ commit, state }) {
       return new Promise((resolve, reject) => {
         logout(state.token).then(() => {
+		  //去除user的token与roles属性
           commit('SET_TOKEN', '');
-          commit('SET_ROLES', []);
+          commit('SET_ROLES', '');
+		  //去除Cookie中的token
           Cookies.remove('Admin-Token');
           resolve();
         }).catch(error => {

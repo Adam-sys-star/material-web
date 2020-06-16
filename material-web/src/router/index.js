@@ -48,6 +48,12 @@ export const asyncRouterMap = [
     children: [
      {path: '/dashboard',name: 'Dashboard',icon:'speedometer',component: _import('Dashboard')},
      {path: '/introduction',name: '介绍',icon:'thumbsup',component: _import('Introduction')},
+	 {path: '/itemsManage',name: '商品管理',redirect: '/itemsManage/itemTable',icon:'speedometer',meta: { role:["商品管理人员"] },
+	 		component: {render (c) { return c('router-view') }},
+	 		children: [ {path: 'itemTable',name: '商品查询',icon:'speedometer',component: _import('itemsManage/itemTable'), hidden:false },
+						{path: 'searchItems',name: '商品搜索',icon:'speedometer',component: _import('itemsManage/searchItems')}
+	 		]
+	 },
      {path: '/components',name: 'component组件',redirect: '/components/buttons',icon:'bookmark',
         component: {render (c) { return c('router-view') }},
         children: [ {path: 'buttons',name: 'Buttons按钮',icon:'social-youtube',component: _import('components/Buttons'), hidden:false, },
@@ -68,19 +74,25 @@ export const asyncRouterMap = [
                     {path: 'upload',name: 'Upload上传',icon:'ios-cloud-upload-outline',component: _import('components/Upload')},
                   ]
       },
-       {path: '/charts',name: 'echart图表',redirect: '/charts/shopchart',icon:'pie-graph',
+       {path: '/charts',name: 'echart图表', icon:'pie-graph',
         component: {render (c) { return c('router-view') }},
         children: [ {path: 'shopchart',name: '商场统计图表',icon:'stats-bars',component: _import('charts/ShopChart'), hidden:false, },
                     {path: 'radarchart',name: '雷达图',icon:'arrow-graph-up-right',component: _import('charts/RadarChart')},
                     {path: 'cakechart',name: '蛋糕销量图表',icon:'ios-analytics',component: _import('charts/CakeChart')}
                   ]
       },
-      {path: '/table', name: '表格综合实例',icon:'ios-paper',component: _import('Table'),meta: { role: ['admin'] }},
+      {path: '/table', name: '表格综合实例',icon:'ios-paper',component: _import('Table'),meta: { role:["超级管理员"] }},
       {path: '/jsontree', name: 'JSON视图',icon:'merge',component: _import('JsonTree')},
       {path: '/tabledetail/:id',name: 'TableDetail', hidden:true, component: _import('TableDetail')},
       // {path: '/tinymce',name: 'Tinymce编辑器',icon:"android-document",component: _import('Tinymce')},
       {path: '/markdown',name: 'Markdown',icon:"android-list",component: _import('Markdown')},
-      
+      {path: '/member',name: '会员管理',icon:"android-list",
+			component: {render (c) { return c('router-view') }},
+			  children:[
+				  {path: 'detail',name: '会员账号管理',icon:'ios-analytics',component: _import('member/MemberManage')},
+				  {path: 'rule',name: '会员规则管理',icon:'ios-analytics',component: _import('member/MemberRule')}
+			  ]
+	  },
     ]
   },
 
@@ -98,6 +110,11 @@ export const asyncRouterMap = [
   },
 
 
-  { path: '*', redirect: '/pages/404', hidden: true }
+  {path: '*', redirect: '/pages/404', hidden: true },
+  {path: '/cashier',name: '收银台',icon:"android-list",component: _import('Cashier')},
+  {path: '/saleList',name: '销售列表',icon:"android-list",component: _import('goodsSale/SaleList')},
+  {path: '/saleDetail',name: '销售明细',icon:"android-list",component: _import('goodsSale/SaleDetail')},
+  // {path: '/member',name: '会员管理',icon:"android-list",component: _import('member/MemberManage')},
+  {path: '/member_rule',name: '会员规则',icon:"android-list",component: _import('member/MemberRule')},
   
 ];
