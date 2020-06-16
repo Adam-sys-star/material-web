@@ -1,17 +1,17 @@
 import fetch from 'utils/fetch';
-
-export function loginByUsername(username, password) {
+//登录
+export function loginByUsername(id , empTelp) {
   const data = {
-    username,
-    password
+    id,
+    empTelp
   };
   return fetch({
-    url: '/material/user/login',
+    url: '/material/user/emplogin',
     method: 'post',
     data
   });
 }
-
+//退出登录
 export function logout(token) {
   return fetch({
     url: '/material/user/logout',
@@ -19,7 +19,7 @@ export function logout(token) {
     params: { token }
   });
 }
-
+//获取员工信息
 export function getInfo(token) {
   return fetch({
     url: '/material/user/info',

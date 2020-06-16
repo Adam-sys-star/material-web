@@ -4,12 +4,12 @@
 
     <Form ref="loginForm" autoComplete="on" :model="loginForm" :rules="loginRules"  class="card-box login-form">
         <Form-item prop="username">
-            <Input type="text" v-model="loginForm.username" placeholder="Username" autoComplete="on">
+            <Input type="text" v-model="loginForm.username" placeholder="请输入工号" autoComplete="on">
                 <Icon type="ios-person-outline" slot="prepend" ></Icon>
             </Input>
         </Form-item>
         <Form-item prop="password">
-            <Input type="password" v-model="loginForm.password" placeholder="Password" @keyup.enter.native="handleLogin">
+            <Input type="password" v-model="loginForm.password" placeholder="请输入密码" @keyup.enter.native="handleLogin">
                 <Icon type="ios-locked-outline" slot="prepend"></Icon>
             </Input>
         </Form-item>
@@ -43,7 +43,7 @@
         };
         return {
           loginForm: {
-            username: 'admin',
+            username: '',
             password: ''
           },
           loginRules: {
@@ -116,8 +116,8 @@ animate();
               this.loading = true;
               this.$store.dispatch('loginByUsername', this.loginForm).then(() => {
                 this.$Message.success('登录成功');
-                
                 this.loading = false;
+				
                 this.$router.push({ path: '/' });
               }).catch(err => {
                 this.$message.error(err);

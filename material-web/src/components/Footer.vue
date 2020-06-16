@@ -1,7 +1,7 @@
 <template>
   <footer class="app-footer">
-    <a >WZ</a> &copy; 2017 creativeLabs.
-    <span class="float-right">Powered by <a href="http://coreui.io">WZ</a></span>
+    2020 creativeLabs.
+    <span class="float-right">Powered by <a href="http://coreui.io">医保产品五部</a></span>
   </footer>
 </template>
 <script>
