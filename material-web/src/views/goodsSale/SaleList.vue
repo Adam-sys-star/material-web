@@ -137,7 +137,7 @@
 				this.saleListData = res.data
 				console.log(res.data);
 			}).catch(function(error) {
-				console.log(error);
+				console.log(error);54
 			});
 		},
 		methods: {
