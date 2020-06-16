@@ -70,11 +70,11 @@
 			return {
 				memberTelp:'',
 				total: 389.45,
-				member: {
-					memberTelp: '小平',
-					memberName: '黄金会员',
-					memberIdNum:
-				},
+				// member: {
+				// 	memberTelp: '小平',
+				// 	memberName: '黄金会员',
+				// 	memberIdNum: 15574
+				// },
 				modal1: false,
 				header: [{
 						title: '货号',
