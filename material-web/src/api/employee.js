@@ -18,3 +18,33 @@ export function deleteById(id){
 
 	});
 }
+export function findEmpById(id){
+
+	return fetch({
+	  url: '/material/emp/findEmpById',
+	  method: 'get',
+	  params:{id}
+
+	});
+}
+
+export function addEmp(emp){
+	const data = emp;
+	
+	return fetch({
+	  url: '/material/emp/addEmp',
+	  method: 'post',
+	  data
+	
+	});
+}
+export function updateEmp(emp){
+	const data = emp;
+	
+	return fetch({
+	  url: '/material/emp/updateEmp',
+	  method: 'post',
+	  data
+	
+	});
+}

@@ -62,8 +62,7 @@ export const asyncRouterMap = [
                     {path: 'card',name: 'Card卡片',icon:'ios-browsers-outline',component: _import('components/Card')},
                     {path: 'datepicker',name: 'DatePicker',icon:'ios-calendar-outline',component: _import('components/DatePicker')},
                     {path: 'form',name: 'Form表单',icon:'ios-list-outline',component: _import('components/Form')},
-					{path: 'employee',name: '员工信息详情',icon:'ios-list-outline',component: _import('components/EmployeeDetail')},
-					{path: 'employees',name: '员工信息',icon:'ios-list-outline',component: _import('components/Employees')},
+					// {path: 'employees',name: '员工信息',icon:'ios-list-outline',component: _import('components/Employees')},
 					{path: 'modal',name: 'Modal对话框',icon:'ios-chatbubble-outline',component: _import('components/Modal')},
                     {path: 'select',name: 'Select选择器',icon:'ios-arrow-down',component: _import('components/Select')},
                     {path: 'spin',name: 'Spin加载中',icon:'load-d ',component: _import('components/Spin')},
@@ -83,6 +82,7 @@ export const asyncRouterMap = [
       },
       {path: '/table', name: '表格综合实例',icon:'ios-paper',component: _import('Table'),meta: { role:["超级管理员"] }},
       {path: '/jsontree', name: 'JSON视图',icon:'merge',component: _import('JsonTree')},
+	  {path: 'employees',name: '员工信息',icon:'ios-list-outline',component: _import('employees/Employees')},
       {path: '/tabledetail/:id',name: 'TableDetail', hidden:true, component: _import('TableDetail')},
       // {path: '/tinymce',name: 'Tinymce编辑器',icon:"android-document",component: _import('Tinymce')},
       {path: '/markdown',name: 'Markdown',icon:"android-list",component: _import('Markdown')},
@@ -108,6 +108,7 @@ export const asyncRouterMap = [
     
     ]
   },
+  
 
 
   {path: '*', redirect: '/pages/404', hidden: true },
@@ -116,5 +117,6 @@ export const asyncRouterMap = [
   {path: '/saleDetail',name: '销售明细',icon:"android-list",component: _import('goodsSale/SaleDetail')},
   // {path: '/member',name: '会员管理',icon:"android-list",component: _import('member/MemberManage')},
   {path: '/member_rule',name: '会员规则',icon:"android-list",component: _import('member/MemberRule')},
-  
+  {path: '/employeeDetail',name: '员工信息详情',icon:'ios-list-outline',component: _import('employees/EmployeeDetail')},
+    {path: '/addEmployee',name: '添加员工',icon:'ios-list-outline',component: _import('employees/AddEmployee')}
 ];
