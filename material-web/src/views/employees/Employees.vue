@@ -1,5 +1,12 @@
 <template>
-    <Table border :columns="columns7" :data="data6"></Table>
+	<div>
+	    <Button type="primary" v-on:click="toAdd">添加员工</Button>
+		<Table border :columns="columns7" :data="data6"></Table>
+		</div>
+
+		
+	
+   
 </template>
 <script>
 	import {getAllEmp} from '../../api/employee.js'
@@ -62,7 +69,7 @@
                                     },
                                     on: {
                                         click: () => {
-                                            this.show(params.index)
+                                            this.show(params.index);
                                         }
                                     }
                                 }, 'View'),
@@ -96,25 +103,36 @@
             }
         },
         methods: {
-            show (index) {
-                this.$Modal.info({
-                    title: 'User Info',
-                    content: `Name：${this.data6[index].empName}<br>Age：${this.data6[index].age}<br>Address：${this.data6[index].address}`
-                })
-            },
+            // show (index) {
+            //     this.$Modal.info({
+            //         title: 'User Info',
+            //         content: `Name：${this.data6[index].empName}<br>Age：${this.data6[index].age}<br>Address：${this.data6[index].address}`
+            //     })
+            // },
+			show(index){
+				console.log("id的值为！！！！！！！！！"+this.data6[index].id)
+				
+				this.$router.push({path:'/employeeDetail',query:{id:this.data6[index].id}});
+			},
+			
             remove (index) {
-                 // this.data6.splice(index, 1);
+                this.data6.splice(index, 1);
 				deleteById(this.data6[index].id);
 				
-				}
+				
             },
-			created:function(){
-								getAllEmp().then((response)=>{
-								
-									console.log("aaaaaaaaaaaaaaaaaa",response.data);
-									this.data6=response.data;
-									console.log(response);
-									}).catch(function(err){console.log(err)})
-							}
-        }
+			toAdd:function(){
+				this.$router.replace('/addEmployee')
+			}
+			
+        },
+		created:function(){
+							getAllEmp().then((response)=>{
+							
+								console.log("aaaaaaaaaaaaaaaaaa",response.data);
+								this.data6=response.data;
+								console.log(response);
+								}).catch(function(err){console.log(err)})
+						}
+	}
 </script>
