@@ -83,11 +83,17 @@
 		getMemberInfo
 	} from '@/api/member.js'
 	import {
-		settlement
-	} from '../../api/sale.js'
+		settlement,
+	} from '@/api/sale.js'
 	import {
 		arrayReCreate
-	} from '../../utils/dataFormat.js'
+	} from '@/utils/dataFormat.js'
+	import {
+		numberMul,
+		numberAdd,
+		numberSub,
+		numberDiv
+	} from '@/utils/calculation.js'
 	import SearchTable from '@/views/goodsSale/SearchTable.vue';
 	import Vue from 'vue';
 	export default {
@@ -323,16 +329,20 @@
 				console.log("结算中", this.itemData);
 			},
 			recalculation: function(money) {
-				this.total += money;
+				// this.total += money;
+				// // var price = (money*this.discount);
+				// var price = Math.round(money * this.discount * 100) / 100
+				// this.finalPrice += price;
+				// this.totalDiscount += (money - price);
+				this.total = numberAdd(this.total,money);
 				// var price = (money*this.discount);
-				var price = Math.round(money * this.discount * 100) / 100
-				this.finalPrice += price;
-				this.totalDiscount += (money - price);
+				var price = Math.round(numberMul(money,this.discount) * 100) / 100
+				this.finalPrice = numberAdd(this.finalPrice,price) ;
+				var addDiscount = numberSub(money,price)
+				this.totalDiscount = numberAdd(this.totalDiscount,addDiscount);
 			},
 			addItemToCart(obj) {
 
-				// obj = {count: 1};
-				// if (this.itemData.length == 0) {
 				var totalAmount = obj.itemSalePrice;
 				var saleAfterDiscount = Math.round(obj.itemSalePrice * this.discount * 100) / 100
 				var saleDiscountAmount = totalAmount - saleAfterDiscount;
@@ -340,23 +350,9 @@
 				Vue.set(obj, 'saleAfterDiscount', totalAmount)
 				Vue.set(obj, 'saleDiscountAmount', saleDiscountAmount)
 				Vue.set(obj, 'totalAmount', totalAmount)
-				// obj.count = 1;
+
 				this.itemData.push(obj);
-				// } else {
-				// 	for (var i = 0; i < this.itemData.length; i++) {
-				// 		if (obj.id == this.itemData[i].id) {
-				// 			console.log("count++++++",this.itemData[i].count)
-				// 			this.itemData[i].count =this.itemData[i].count + 1;
-				// 			console.log("count++++++",this.itemData[i].count)
-				// 			break
-				// 		} else if (i == this.itemData.length - 1) {
-				// this.itemData.push(obj);
-				// 		}
-				// 		// console.log(this.itemData[i].count++)
-				// 	}
-				// this.itemData[0].count = this.itemData[0].count + 1;
-				// } 
-				// console.log("this.itemData[0].count", this.itemData[0].count);
+
 				this.recalculation(obj.itemSalePrice);
 				console.log("添加商品", obj);
 				console.log("收银台商品", this.itemData);
@@ -373,10 +369,8 @@
 				var moneyChange = -(obj.count * obj.itemSalePrice);
 				this.recalculation(moneyChange);
 				this.itemData.splice(index, 1);
-
 			}
 		}
-
 	}
 </script>
 
