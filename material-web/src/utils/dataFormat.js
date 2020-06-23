@@ -1,3 +1,4 @@
+import Vue from 'vue';
 // 时间格式化
 export function formatDate(date, fmt) {
 	let o = {
@@ -17,4 +18,26 @@ export function formatDate(date, fmt) {
 		}
 	}
 	return fmt
+}
+
+export function arrayReCreate(oldArr, attrMap) {
+	var newArr = [];
+	const map = new Map([
+		['salePrice', 'itemSalePrice'],
+		['saleNumber', "count"],
+		['saleAfterDiscount', 'saleAfterDiscount'],
+		['saleDiscountAmount', 'saleDiscountAmount'],
+		['totalAmount', 'totalAmount'],
+		["itemId", 'id']
+	]);
+	for (var i = 0; i < oldArr.length; i++) {
+		var obj = {};
+		map.forEach(function(value, index) {
+			// console.log(index + ': ' + value);
+			Vue.set(obj, index, oldArr[i][value]);
+		});
+		newArr.push(obj)
+	}
+	console.log("newArr", newArr)
+	return newArr;
 }

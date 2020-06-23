@@ -9,3 +9,14 @@ export function searchItem(pageNO,itemClass,itemName){
 	});
 	
 }
+
+
+export function search(keyWord){
+	
+	return fetch({
+		url:'/material/item/search',
+		method:'get',
+		params:{keyWord}
+	});
+	
+}

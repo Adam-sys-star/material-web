@@ -6,14 +6,14 @@
 			<SaleDetail :itemSaleId="itemSaleId"></SaleDetail>
 			<div slot="footer"></div>
 		</Modal>
-		<Row style="margin-left: 8%;">
-			<Col span="10">
+		<Row >
+			<Col offset="1" span="8" style="">
 			<DatePicker v-model="startTime" type="date" placeholder="Select date" style="width: 200px"></DatePicker>
 			--
 			<DatePicker v-model="endTime" type="date" placeholder="Select date" style="width: 200px"></DatePicker>
 			</Col>
 
-			<Col span="6">
+			<Col span="6" offset="1">
 			<label></label>
 			<Input v-model="key" placeholder="订单号/操作人/顾客名" style="width: 200px;" @keyup.enter.native="searchSaleList"></Input>
 			</Col>
@@ -109,7 +109,7 @@
 											this.show(params.index)
 										}
 									}
-								}, 'View'),
+								}, '详单'),
 								h('Button', {
 									props: {
 										type: 'error',
@@ -121,7 +121,7 @@
 											this.model1 = true;
 										}
 									}
-								}, 'Delete')
+								}, '退货')
 							]);
 						}
 					}

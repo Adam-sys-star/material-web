@@ -93,6 +93,7 @@ export const asyncRouterMap = [
 				  {path: 'rule',name: '会员规则管理',icon:'ios-analytics',component: _import('member/MemberRule')}
 			  ]
 	  },
+      {path: '/sale_list',name: '销售记录',icon:"android-list",component: _import('goodsSale/SaleList')},
     ]
   },
 

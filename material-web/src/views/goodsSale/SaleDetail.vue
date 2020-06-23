@@ -46,7 +46,7 @@
 
 				saleDetailHeader: [{
 						title: '货号',
-						key: 'id',
+						key: 'itemId',
 						sortable: true
 					},
 					{
@@ -71,24 +71,24 @@
 					},
 					{
 						title: '数量',
-						key: 'itemId'
+						key: 'saleNumber'
 					},
 					{
 						title: '总金额',
-						key: 'itemId'
+						key: 'totalAmount'
 					},
 					{
 						title: '优惠金额',
-						key: 'itemId'
+						key: 'saleDiscountAmount'
 					},
 					{
 						title: '折后价格',
-						key: 'itemId'
+						key: 'saleAfterDiscount'
 					},
 					{
 						title: '操作',
 						key: 'action',
-						width: 150,
+						width: 75,
 						align: 'center',
 						render: (h, params) => {
 							return h('div', [
@@ -105,18 +105,7 @@
 											this.show(params.index)
 										}
 									}
-								}, 'View'),
-								h('Button', {
-									props: {
-										type: 'error',
-										size: 'small'
-									},
-									on: {
-										click: () => {
-											this.remove(params.index)
-										}
-									}
-								}, 'Delete')
+								}, '详单')
 							]);
 						}
 					}
@@ -151,7 +140,7 @@
 			reloadData: function(itemSaleId) {
 				getSaleDetail(this.itemSaleId).then(res => {
 					this.saleDetailDate = res.data
-					console.log(res.data);
+					console.log("销售单详情",res.data);
 				}).catch(function(error) {
 					console.log(error);
 				});
@@ -162,9 +151,6 @@
 					title: 'User Info',
 					content: `Name：${this.data6[index].name}<br>Age：${this.data6[index].age}<br>Address：${this.data6[index].address}`
 				})
-			},
-			remove(index) {
-				this.data6.splice(index, 1);
 			}
 		}
 
