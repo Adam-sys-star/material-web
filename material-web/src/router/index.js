@@ -82,7 +82,7 @@ export const asyncRouterMap = [
       },
       {path: '/table', name: '表格综合实例',icon:'ios-paper',component: _import('Table'),meta: { role:["超级管理员"] }},
       {path: '/jsontree', name: 'JSON视图',icon:'merge',component: _import('JsonTree')},
-	  {path: 'employees',name: '员工信息',icon:'ios-list-outline',component: _import('employees/Employees')},
+	  {path: '/employees',name: '员工信息',icon:'ios-list-outline',component: _import('employees/Employees')},
       {path: '/tabledetail/:id',name: 'TableDetail', hidden:true, component: _import('TableDetail')},
       // {path: '/tinymce',name: 'Tinymce编辑器',icon:"android-document",component: _import('Tinymce')},
       {path: '/markdown',name: 'Markdown',icon:"android-list",component: _import('Markdown')},
