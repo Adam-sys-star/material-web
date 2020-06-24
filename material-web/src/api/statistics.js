@@ -5,7 +5,9 @@ export function loadTurnoverData(params) {
 	console.log("params", params)
 	return fetch({
 		url: '/material/statistics/turnover',
-		method: 'get',
+		// method: 'get',
+		method: 'post',
+		
 		data:params
 	});
 }
