@@ -93,6 +93,13 @@ export const asyncRouterMap = [
 				  {path: 'rule',name: '会员规则管理',icon:'ios-analytics',component: _import('member/MemberRule')}
 			  ]
 	  },
+		{path: '/statistics',name: '统计查询',icon:"android-list",
+			component: {render (c) { return c('router-view') }},
+			  children:[
+				  // {path: 'Turnover',name: '会员账号管理',icon:'ios-analytics',component: _import('member/MemberManage')},
+				  {path: 'Turnover',name: '营业额统计',icon:'ios-analytics',component: _import('statistics/Turnover')}
+			  ]
+		},
       {path: '/sale_list',name: '销售记录',icon:"android-list",component: _import('goodsSale/SaleList')},
     ]
   },
