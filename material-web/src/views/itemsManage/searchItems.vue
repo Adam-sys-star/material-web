@@ -16,7 +16,7 @@
 
 <script>
 	
-	import {searchItem} from '@/api/searchItem.js'
+	import {searchItemClass,searchItem} from '@/api/searchItem.js'
 	
 	export default {
 		data () {
@@ -30,16 +30,14 @@
 				//table的数据
 				TableData: [],
 				//商品类别选择  父级类别写死，子级列别通过后台查询
-				itemclass: [{
+				itemclass: [
+					{
 						value: '1',
 						label: '0TC类',
 						children: [
 							{
-								value: '9',
-								label: '感冒清热解毒'
-							},{
-								value: '10',
-								label: '心脑血管类'
+								value: '1',
+								label: '0TC类',
 							}
 						]
 					},{
@@ -175,6 +173,9 @@
 				this.searchItemByClassAndName(this.itemClass,this.itemName);
 				
 			},
+			getItemClass(){
+				
+			},
 			searchItemByClassAndName(itemClass,itemName){
 				
 				var classstr = '';
@@ -187,9 +188,9 @@
 				
 				// itemName,itemClass
 				searchItem(this.pageNo,classstr,itemName).then(res => {
-					
 					var itemDatas = res.data.list;
-					for(var i = 0;i < res.data.length;i++){
+					//遍历所有的项判断是否折扣   1：是     0：否
+					for(var i = 0;i < itemDatas.length;i++){
 						let itemdata = itemDatas[i];
 						if(itemdata.itemDiscState == 1){
 							itemdata.itemDiscState = '是'
@@ -197,6 +198,8 @@
 							itemdata.itemDiscState = '否'
 						}
 					}
+					
+					//将数据传给TableData
 					this.TableData = itemDatas
 					
 					this.pageNum = res.data.pages
@@ -219,6 +222,52 @@
 		},
 		//钩子函数，在组件完成创建后触发 不需要写在methods中 ,create方法使用要放在最后，methods之后才能去调用方法。
 		created(){
+			//获取Promise对象的data
+			searchItemClass().then(res => {
+				//获取了商品类别的集合
+				let items = res.data;
+				
+				console.log("一共有"+items.length+"种商品类别")
+				
+				//缓存类别数组
+				var arr = [];
+				//缓存当前父类级别
+				var findex = 1;
+				//缓存到第几个
+				var num = 0;
+				for(let j = 0;j < 6 ; j++){
+					for(let i = 0;i < items.length ; i++){
+						if(findex == items[num].itemClassFather){
+							arr.push(items[num]);
+							num++;
+							if(num == items.length-1){
+								arr.push(items[num]);
+								break;
+							}
+						}else{
+							this.itemclass[j].children = arr.map(item => {
+								return {
+									value: item.id,
+									label: item.itemClassName
+								}
+							})
+							arr = [];
+							findex = items[num].itemClassFather;
+							break;
+						}
+					}
+				}
+				//最后一步未添加，在循环外添加
+				this.itemclass[5].children = arr.map(item => {
+					return {
+						value: item.id,
+						label: item.itemClassName
+					}
+				})
+				
+			})
+				
+			
 			this.searchItemByClassAndName(this.itemClass,this.itemName)
 		}
 	}
