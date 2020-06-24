@@ -6,16 +6,32 @@
 			<SaleDetail :itemSaleId="itemSaleId"></SaleDetail>
 			<div slot="footer"></div>
 		</Modal>
-		<Row >
-			<Col offset="1" span="8" style="">
+		<Modal v-model="modal2" title="确认退货" width="300px" @on-ok="ok" @on-cancel="cancel">
+			<p slot="header" style="color:#f60;text-align:center">
+				<Icon type="ios-information-circle"></Icon>
+				<span width="100px">确认退货？</span>
+			</p>
+			<div style="text-align:center">
+				<p>请确认是否退货</p>
+
+			</div>
+			<div slot="footer">
+				<Button type="error" long :loading="modal_loading" @click="del">退货</Button>
+			</div>
+		</Modal>
+		<Row>
+			<Col offset="1" span="11" style="">
 			<DatePicker v-model="startTime" type="date" placeholder="Select date" style="width: 200px"></DatePicker>
 			--
 			<DatePicker v-model="endTime" type="date" placeholder="Select date" style="width: 200px"></DatePicker>
 			</Col>
 
-			<Col span="6" offset="1">
-			<label></label>
+			<Col span="4" offset="1">
 			<Input v-model="key" placeholder="订单号/操作人/顾客名" style="width: 200px;" @keyup.enter.native="searchSaleList"></Input>
+			</Col>
+
+			<Col span="2" offset="1">
+			<Input v-model="key" @keyup.enter.native="searchSaleList"></Input>
 			</Col>
 			<Button v-on:click="gotoView('/cashier')" type="warning" style="margin-left: 50px;">返回收银台</Button>
 		</Row>
@@ -28,9 +44,10 @@
 <script>
 	import SaleDetail from '@/views/goodsSale/SaleDetail.vue'
 	import {
-		getSaleList
+		getSaleList,
+		backSake
 	} from '@/api/sale.js'
-	import{
+	import {
 		formatDate
 	} from '@/utils/dataFormat.js'
 	export default {
@@ -55,6 +72,7 @@
 				endTime: null,
 				modal1: false,
 				itemSaleId: '',
+				modal2:false,
 				saleListHeader: [{
 						title: '订单号',
 						key: 'id',
@@ -87,7 +105,8 @@
 							return h('div',
 								formatDate(new Date(params.row.saleTime), 'yyyy-MM-dd hh:mm')
 							)
-						}
+						},
+						sortable: true
 					},
 					{
 						title: '操作',
@@ -113,12 +132,13 @@
 								h('Button', {
 									props: {
 										type: 'error',
-										size: 'small'
+										size: 'small',
+										disabled:(params.row.saleRejectRemark==0)
 									},
 									on: {
 										click: () => {
-											// this.remove(params.index)
-											this.model1 = true;
+											this.delIndex = params.index;
+											this.modal2 = true;
 										}
 									}
 								}, '退货')
@@ -130,18 +150,18 @@
 			}
 		},
 
-
 		created: function() {
 			//在created函数中使用axios的get请求向后台获取用户信息数据
 			getSaleList(this.startTime, this.endTime, this.key).then(res => {
 				this.saleListData = res.data
 				console.log(res.data);
 			}).catch(function(error) {
-				console.log(error);54
+				console.log(error);
+				54
 			});
 		},
 		methods: {
-			gotoView:function(path) {
+			gotoView: function(path) {
 				this.$router.replace(path)
 			},
 			formatDate(value) {
@@ -174,18 +194,22 @@
 				});
 			},
 
+			del: function() {
+				backSake(this.saleListData[this.delIndex].id).then(res => {
+					this.modal2 = false;
+					console.log("退货成功");
+					this.reload();
+				}).catch(function(error) {
+					console.log(error);
+				});
+			},
+
 			show(index) {
 
 				this.itemSaleId = this.saleListData[index].id;
 
 				console.log("itemSaleId", this.itemSaleId);
 				this.modal1 = true;
-
-				// this.$Modal.info({
-				// 	title: 'User Info',
-				// 	// content: `Name：${this.data6[index].name}<br>Age：${this.data6[index].age}<br>Address：${this.data6[index].address}`
-				// 	content: `<SaleDetail></SaleDetail>`
-				// })
 			},
 			remove(index) {
 				this.data6.splice(index, 1);
