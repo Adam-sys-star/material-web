@@ -34,12 +34,7 @@
 					{
 						value: '1',
 						label: '0TC类',
-						children: [
-							{
-								value: '1',
-								label: '0TC类',
-							}
-						]
+						children: []
 					},{
 						value: '2',
 						label: '处方类',

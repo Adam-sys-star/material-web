@@ -22,13 +22,24 @@ export function searchItemClass(){
 }
 
 
+//查询商品
+export function selectItem(Iteminfo,pageNO,pageSize){
+	
+	return fetch({
+		url:'/material/item/selectItem',
+		method:'get',
+		params:{"itemName":Iteminfo.itemName,"itemClassId":Iteminfo.itemClassId,
+		"itemSalePrice1":Iteminfo.itemSalePrice1,"itemSalePrice2":Iteminfo.itemSalePrice2,
+		"itemFactoryName":Iteminfo.itemFactoryName,"pageNO":pageNO,"pageSize":pageSize}
+	});
+	
+}
+
 //通过关键词查找商品
 export function search(keyWord){
-	
 	return fetch({
 		url:'/material/item/search',
 		method:'get',
 		params:{keyWord}
 	});
-	
 }
