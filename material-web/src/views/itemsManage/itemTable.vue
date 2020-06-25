@@ -42,7 +42,7 @@
 	</div>
 </template>
 <script>
-	
+	 
 	import {searchItemClass,selectItem} from '@/api/searchItem.js'
 	
     export default {

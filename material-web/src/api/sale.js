@@ -41,3 +41,13 @@ export function settlement(itemSale,itemData) {
 		data
 	});
 }
+
+
+export function backSake(id) {
+	return fetch({
+		url: '/material/item_sale/back_sale',
+		method: 'post',
+		params:{id}
+	});
+}
+

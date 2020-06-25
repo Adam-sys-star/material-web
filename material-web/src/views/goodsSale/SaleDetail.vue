@@ -46,12 +46,16 @@
 
 				saleDetailHeader: [{
 						title: '货号',
-						key: 'itemId',
+						render: (h, params) => {
+						      return h("span", this.saleDetailDate[params.index].item.id);
+						    },
 						sortable: true
 					},
 					{
 						title: '商品名称',
-						key: 'itemId'
+						render: (h, params) => {
+						      return h("span", this.saleDetailDate[params.index].item.itemName);
+						    }
 					},
 					{
 						title: '商品类别',
@@ -59,55 +63,45 @@
 					},
 					{
 						title: '规格',
-						key: 'itemId'
+						render: (h, params) => {
+						      return h("span", this.saleDetailDate[params.index].item.itemSpec);
+						    }
 					},
 					{
 						title: '单位',
-						key: 'itemId'
+						render: (h, params) => {
+						      return h("span", this.saleDetailDate[params.index].item.itemUnit);
+						    }
 					},
 					{
 						title: '零售价',
-						key: 'salePrice'
+						render: (h, params) => {
+						      return h("span", this.saleDetailDate[params.index].itemSaleDetail.salePrice);
+						    }
 					},
 					{
 						title: '数量',
-						key: 'saleNumber'
+						render: (h, params) => {
+						      return h("span", this.saleDetailDate[params.index].itemSaleDetail.saleNumber);
+						    }
 					},
 					{
 						title: '总金额',
-						key: 'totalAmount'
+						render: (h, params) => {
+						      return h("span", this.saleDetailDate[params.index].itemSaleDetail.totalAmount);
+						    }
 					},
 					{
 						title: '优惠金额',
-						key: 'saleDiscountAmount'
+						render: (h, params) => {
+						      return h("span", this.saleDetailDate[params.index].itemSaleDetail.saleDiscountAmount);
+						    }
 					},
 					{
 						title: '折后价格',
-						key: 'saleAfterDiscount'
-					},
-					{
-						title: '操作',
-						key: 'action',
-						width: 75,
-						align: 'center',
 						render: (h, params) => {
-							return h('div', [
-								h('Button', {
-									props: {
-										type: 'primary',
-										size: 'small'
-									},
-									style: {
-										marginRight: '5px'
-									},
-									on: {
-										click: () => {
-											this.show(params.index)
-										}
-									}
-								}, '详单')
-							]);
-						}
+						      return h("span", this.saleDetailDate[params.index].itemSaleDetail.saleAfterDiscount );
+						    }
 					}
 				],
 				saleDetailDate: []
