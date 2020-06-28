@@ -187,7 +187,6 @@
 												this.itemData[param.index].count = event;
 												console.log("this.itemData[param.index].count", this.itemData[param.index].count);
 											},
-
 										}
 									}),
 									h(
@@ -245,11 +244,17 @@
 			document.addEventListener("click", e => {
 				var box = document.getElementById("searchField");
 				var searchInput = document.getElementById("searchInput");
-				if (box.contains(e.target) || searchInput.contains(e.target)) {
+				var searchAdd = document.getElementById("search_add");
+				if (box.contains(e.target) || 
+				searchInput.contains(e.target) ||
+				 e.target.id=='search_add'||
+				 e.target.innerText=='添加 ✔') {
 					this.showSearch = true;
+					console.log("div之内")
 				} else {
 					this.showSearch = false;
 					this.keyWord = '';
+					console.log("div之外s")
 				}
 			})
 			store.dispatch('GetInfo').then(res => { // 拉取user_info
