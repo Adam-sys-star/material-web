@@ -79,6 +79,7 @@
 </template>
 
 <script>
+	import store from '@/store'
 	import {
 		getMemberInfo
 	} from '@/api/member.js'
@@ -101,7 +102,7 @@
 		components: {
 			SearchTable
 		},
-
+		inject: ['reload'],
 		data() {
 			return {
 				memberTelp: '',
@@ -121,7 +122,7 @@
 					'margin-left': '5%'
 					// display: 'none'
 				},
-
+				emp: {},
 				modal1: false,
 
 				header: [{
@@ -180,12 +181,12 @@
 												console.log("obj", obj);
 												var moneyChange = (event - obj.count) * (obj.itemSalePrice);
 												console.log("moneyChange", moneyChange);
+												this.recalculationItemPrice(param.index, moneyChange);
 												this.recalculation(moneyChange);
-
 												param.row.count = event;
 												this.itemData[param.index].count = event;
+												console.log("this.itemData[param.index].count", this.itemData[param.index].count);
 											},
-
 										}
 									}),
 									h(
@@ -222,20 +223,6 @@
 							return h('div', [
 								h('Button', {
 									props: {
-										type: 'primary',
-										size: 'small'
-									},
-									style: {
-										marginRight: '5px'
-									},
-									on: {
-										click: () => {
-											this.show(params.index)
-										}
-									}
-								}, 'View'),
-								h('Button', {
-									props: {
 										type: 'error',
 										size: 'small'
 									},
@@ -253,19 +240,26 @@
 			}
 		},
 		created: function() {
+			// 监听鼠标是否在div之内
 			document.addEventListener("click", e => {
 				var box = document.getElementById("searchField");
 				var searchInput = document.getElementById("searchInput");
-				if (box.contains(e.target) || searchInput.contains(e.target)) {
-					// console.log("div之内");
-					// this.uiStyle.display = 'block';
+				var searchAdd = document.getElementById("search_add");
+				if (box.contains(e.target) || 
+				searchInput.contains(e.target) ||
+				 e.target.id=='search_add'||
+				 e.target.innerText=='添加 ✔') {
 					this.showSearch = true;
+					console.log("div之内")
 				} else {
-					// console.log("div之外");
-					// this.uiStyle.display = 'none';
 					this.showSearch = false;
 					this.keyWord = '';
+					console.log("div之外s")
 				}
+			})
+			store.dispatch('GetInfo').then(res => { // 拉取user_info
+				console.log("操作员信息", res)
+				this.emp = res.data;
 			})
 		},
 		methods: {
@@ -281,6 +275,7 @@
 						this.memberClass = '会员类型：' + this.memberRes.memberClass.memberClassName;
 						this.discount = this.memberRes.memberClass.memberClassDiscount
 					} else {
+						this.memberTelp = '';
 						this.memberTelp1 = '';
 						this.memberClass = '';
 						this.memberName = '没有该会员信息';
@@ -316,38 +311,43 @@
 			},
 			settlement: function() {
 				const itemSale = {
-					employeeId: "cashier",
-					memberId: this.memberTelp1,
+					employeeId: this.emp.id,
+					memberId: this.memberTelp,
 					saleAfterDiscount: this.finalPrice,
 					saleDiscountAmount: this.totalDiscount,
 					saleTotalAmount: this.total
 				}
 				var newItemData = arrayReCreate(this.itemData, null);
+				
 				// 商品数组（数量，定价，优惠金额）
-				settlement(itemSale, newItemData);
+				settlement(itemSale, newItemData).then(res => {
+					this.reload();
+				});
 				// settlement("会员id","员工id",16.50,60.50,77.00);
 				console.log("结算中", this.itemData);
 			},
 			recalculation: function(money) {
-				// this.total += money;
-				// // var price = (money*this.discount);
-				// var price = Math.round(money * this.discount * 100) / 100
-				// this.finalPrice += price;
-				// this.totalDiscount += (money - price);
-				this.total = numberAdd(this.total,money);
-				// var price = (money*this.discount);
-				var price = Math.round(numberMul(money,this.discount) * 100) / 100
-				this.finalPrice = numberAdd(this.finalPrice,price) ;
-				var addDiscount = numberSub(money,price)
-				this.totalDiscount = numberAdd(this.totalDiscount,addDiscount);
+				this.total = numberAdd(this.total, money);
+				var price = Math.round(numberMul(money, this.discount) * 100) / 100
+				this.finalPrice = numberAdd(this.finalPrice, price);
+				var addDiscount = numberSub(money, price)
+				this.totalDiscount = numberAdd(this.totalDiscount, addDiscount);
+			},
+
+			recalculationItemPrice: function(index, money) {
+				var totalAmount = money;
+				var saleAfterDiscount = Math.round(money * this.discount * 100) / 100
+				var saleDiscountAmount = numberSub(totalAmount, saleAfterDiscount);
+				this.itemData[index].totalAmount = numberAdd(this.itemData[index].totalAmount, money);
+				this.itemData[index].saleAfterDiscount = numberAdd(this.itemData[index].saleAfterDiscount, saleAfterDiscount);
+				this.itemData[index].saleDiscountAmount = numberAdd(this.itemData[index].saleDiscountAmount, saleDiscountAmount);
 			},
 			addItemToCart(obj) {
-
 				var totalAmount = obj.itemSalePrice;
 				var saleAfterDiscount = Math.round(obj.itemSalePrice * this.discount * 100) / 100
-				var saleDiscountAmount = totalAmount - saleAfterDiscount;
+				var saleDiscountAmount = numberSub(totalAmount, saleAfterDiscount);
 				Vue.set(obj, 'count', 1)
-				Vue.set(obj, 'saleAfterDiscount', totalAmount)
+				Vue.set(obj, 'saleAfterDiscount', saleAfterDiscount)
 				Vue.set(obj, 'saleDiscountAmount', saleDiscountAmount)
 				Vue.set(obj, 'totalAmount', totalAmount)
 

@@ -45,10 +45,10 @@ export const asyncRouterMap = [
     name: '首页',
     component: Full,
     hidden:false,
-    children: [
+    children: [ 
      {path: '/dashboard',name: 'Dashboard',icon:'speedometer',component: _import('Dashboard')},
      {path: '/introduction',name: '介绍',icon:'thumbsup',component: _import('Introduction')},
-	 {path: '/itemsManage',name: '商品管理',redirect: '/itemsManage/itemTable',icon:'speedometer',meta: { role:["商品管理人员"] },
+	 {path: '/itemsManage',name: '商品管理',redirect: '/itemsManage/itemTable',icon:'speedometer',meta: { role:["商品管理员"] },
 	 		component: {render (c) { return c('router-view') }},
 	 		children: [ {path: 'itemTable',name: '商品查询',icon:'speedometer',component: _import('itemsManage/itemTable'), hidden:false },
 						{path: 'searchItems',name: '商品搜索',icon:'speedometer',component: _import('itemsManage/searchItems')}
@@ -101,6 +101,13 @@ export const asyncRouterMap = [
 				  {path: 'rule',name: '会员规则管理',icon:'ios-analytics',component: _import('member/MemberRule')}
 			  ]
 	  },
+		{path: '/statistics',name: '统计查询',icon:"android-list",
+			component: {render (c) { return c('router-view') }},
+			  children:[
+				  // {path: 'Turnover',name: '会员账号管理',icon:'ios-analytics',component: _import('member/MemberManage')},
+				  {path: 'Turnover',name: '营业额统计',icon:'ios-analytics',component: _import('statistics/Turnover')}
+			  ]
+		},
       {path: '/sale_list',name: '销售记录',icon:"android-list",component: _import('goodsSale/SaleList')},
     ]
   },

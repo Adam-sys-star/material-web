@@ -82,9 +82,13 @@
 										}
 									},
 									[h('Button', {
+										attrs: {
+											id: "search_add"
+										},
 										props: {
 											type: 'success',
 											size: 'small',
+											id: 'addItem'
 										},
 										style: {
 											width: "70px",
@@ -95,7 +99,7 @@
 												this.addItem(params.index)
 											}
 										}
-									}, ' 添加 ✔'), ])
+									}, '添加 ✔'), ])
 							]);
 						}
 					}
@@ -117,7 +121,7 @@
 			reloadData: function(keyWord) {
 				search(keyWord).then(res => {
 					this.itemData = res.data;
-					this.itemData = this.getDifferenceSet(this.addedItem,this.itemData,"id")
+					this.itemData = this.getDifferenceSet(this.addedItem, this.itemData, "id")
 					console.log("商品搜索结果", res)
 				}).catch(function(error) {
 					console.log(error);
