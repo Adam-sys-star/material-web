@@ -51,7 +51,8 @@ export const asyncRouterMap = [
 	 {path: '/itemsManage',name: '商品管理',redirect: '/itemsManage/itemTable',icon:'speedometer',meta: { role:["商品管理员"] },
 	 		component: {render (c) { return c('router-view') }},
 	 		children: [ {path: 'itemTable',name: '商品查询',icon:'speedometer',component: _import('itemsManage/itemTable'), hidden:false },
-						{path: 'searchItems',name: '商品搜索',icon:'speedometer',component: _import('itemsManage/searchItems')}
+						{path: 'searchItems',name: '商品搜索',icon:'speedometer',component: _import('itemsManage/searchItems')},
+						{path: 'maintainItem',name: '商品维护',icon:'speedometer',component: _import('itemsManage/maintainItem'),hidden:true},
 	 		]
 	 },
      {path: '/components',name: 'component组件',redirect: '/components/buttons',icon:'bookmark',
@@ -134,5 +135,5 @@ export const asyncRouterMap = [
   // {path: '/member',name: '会员管理',icon:"android-list",component: _import('member/MemberManage')},
   {path: '/member_rule',name: '会员规则',icon:"android-list",component: _import('member/MemberRule')},
   {path: '/employeeDetail',name: '员工信息详情',icon:'ios-list-outline',component: _import('employees/EmployeeDetail')},
-    {path: '/addEmployee',name: '添加员工',icon:'ios-list-outline',component: _import('employees/AddEmployee')}
+  {path: '/addEmployee',name: '添加员工',icon:'ios-list-outline',component: _import('employees/AddEmployee')},
 ];

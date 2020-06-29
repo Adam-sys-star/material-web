@@ -35,11 +35,50 @@ export function selectItem(Iteminfo,pageNO,pageSize){
 	
 }
 
+//添加商品
+export function addItem(item){
+	const data = item;
+	return fetch({
+		url:'/material/item/addItem',
+		method:'post',
+		data
+	});
+	
+}
+
+//修改商品
+export function updateItem(item){
+	const data = item;
+	return fetch({
+		url:'/material/item/updateItem',
+		method:'post',
+		data
+	});
+}
+
+//删除商品
+export function deleteItem(itemid){
+	return fetch({
+		url:'/material/item/deleteItem',
+		method:'post',
+		params:{itemid}
+	});
+}
+
 //通过关键词查找商品
 export function search(keyWord){
 	return fetch({
 		url:'/material/item/search',
 		method:'get',
 		params:{keyWord}
+	});
+}
+
+//通过主键查找商品
+export function searchItemById(id){
+	return fetch({
+		url:'/material/item/searchItemById',
+		method:'post',
+		params:{id}
 	});
 }

@@ -48,3 +48,10 @@ export function oneOf (value, validList) {
 
 
 
+//是否为数字加小数点  /^\d+(\.\d+)?$/
+export function validateNum(str){
+	
+	const reg = /^\d+(\.\d+)?$/;
+	
+	return reg.test(str);
+}
