@@ -1,4 +1,5 @@
-
+/*@author: Duan xiaoping*/
+// 浮点数加减乘除
 // 乘法
 export function numberMul(arg1, arg2) {
     var m = 0;
