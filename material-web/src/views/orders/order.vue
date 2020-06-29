@@ -111,6 +111,27 @@
 					{
 					    title: '生产厂家',
 					    key: 'itemFactoryName'
+					},
+					{
+						title: '操作',
+						key: 'action',
+						width: 150,
+						align: 'center',
+						render: (h, params) => {
+							return h('div', [
+								h('Button', {
+									props: {
+										type: 'error',
+										size: 'small'
+									},
+									on: {
+										click: () => {
+											this.remove(params.index)
+										}
+									}
+								}, '删除')
+							]);
+						}
 					}
                 ],
                 data1: [
@@ -187,6 +208,10 @@
 					this.reload();
 					}
 				)
+			},
+			remove(index) {
+				
+				this.itemData.splice(index, 1);
 			}
 		},
 		created: function() {
