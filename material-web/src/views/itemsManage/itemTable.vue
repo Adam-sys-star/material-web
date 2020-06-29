@@ -10,7 +10,7 @@
 		<Cascader :data="itemclass" change-on-select  v-model="itemClass"  style="width: 250px;float: left;"></Cascader>
 		
 		<!-- 添加商品  按钮 -->
-		<Button type="warning" @click="AddItem"
+		<Button type="warning" @click="maintainItem"
 		style="height: 32px;float: left;margin-left: 29px;"  icon="ios-plus">添 加</Button>
 		
 		<br /><br />
@@ -43,7 +43,7 @@
 </template>
 <script>
 	 
-	import {searchItemClass,selectItem} from '@/api/searchItem.js'
+	import {searchItemClass,selectItem,deleteItem} from '@/api/searchItem.js';
 	
     export default {
         data () {
@@ -120,7 +120,7 @@
 					{
 						title: '操作',
 						key: 'action',
-						width:150,
+						width:170,
 						align: 'center',
 						render: (h, params) => {
 							return h('div', [
@@ -138,30 +138,49 @@
 										icon:"eye",
 									},
 									style: {
-										width:"70px",
+										width:"60px",
 										height :"30px",
 									},
 									on: {
 										click: () => {
-											this.show(params.index)
+											
+											let index = params.index;
+											let id = this.TableData[index].id;
+											this.$router.push({
+											path: "./maintainItem",
+											query: {
+												id: id
+											}});
+											
 										}
 									}
 								}, ' 详 情'),
-								// h('Button', {
-								// 	props: {
-								// 		type: 'success',
-								// 		size: 'small',
-								// 	},
-								// 	style: {
-								// 		width:"70px",
-								// 		height :"30px"
-								// 	},
-								// 	on: {
-								// 		click: () => {s
-								// 			this.show(params.index)
-								// 		}
-								// 	}
-								// },' 添加 ✔'),
+								h('Button', {
+									props: {
+										type: 'error',
+										size: 'small',
+									},
+									style: {
+										width:"60px",
+										height :"30px"
+									},
+									on: {
+										click: () => {
+											
+											let index = params.index;
+											
+											var r=confirm("确认删除商品 "+this.TableData[index].itemName)
+											
+											if(r == true){
+												let id = this.TableData[index].id;
+												let name = this.TableData[index].itemName;
+												this.deleteItem(id,name);
+											}else{
+												
+											}
+										}
+									}
+								},' 删除 ✘'),
 								])
 							]);
 						}
@@ -196,14 +215,11 @@
 					
 					var itemDatas = res.data.list;
 					
-					
 					this.pageNum = res.data.pages*this.pageSize
 					
 					this.TableData = itemDatas
 					
-					
 				});
-				
 				
 			},
 			//搜索商品类别
@@ -249,11 +265,32 @@
 						}
 					})
 				});
-			}
-			
-			
-			
-			
+			},
+			//点击添加商品的时候进行的跳转
+			maintainItem(){
+				
+				this.$router.push("./maintainItem");
+				
+			},
+			deleteItem(id,name){
+				
+				deleteItem(id).then(res => {
+					
+					if(res.data == true){
+						
+						//搜索商品
+						this.selectItem()
+						
+						this.$Notice.success({
+						   title: '成功',
+						   desc:  '商品 '+name+' 删除成功'
+						});
+						
+					}
+					
+				});
+				
+			},
         },
 		//钩子函数，在组件完成创建后触发 不需要写在methods中 ,create方法使用要放在最后，methods之后才能去调用方法。
 		created(){
