@@ -105,7 +105,8 @@
 					}
 				],
 				itemData: [],
-				addedItem: []
+				addedItem: [],
+				
 			};
 		},
 		created: function() {
