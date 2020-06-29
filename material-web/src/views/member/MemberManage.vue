@@ -2,7 +2,8 @@
 	<div>
 		<h1 style="font-size: 60px; text-align: center;">会员管理</h1>
 
-		<Modal v-model="modal2" title="确认删除" width="300px" @on-ok="ok" @on-cancel="cancel">
+		<Modal v-model="modal2" title="确认删除" width="300px"
+		 :styles="{top: '60px'}" @on-ok="ok" @on-cancel="cancel">
 			<p slot="header" style="color:#f60;text-align:center">
 				<Icon type="ios-information-circle"></Icon>
 				<span width="100px">确认删除？</span>
@@ -42,9 +43,9 @@
 				<Col span=6>
 				<label class="member_title">会员类型</label>
 				</Col>
-				<!-- <Select v-model="member.memberClassId" style="width:300px">
-					<Option v-for="item in city" :value="item.value" :key="item.value">{{ item.label }}</Option>
-				</Select> -->
+				<Select v-model="member.memberClassId" style="width:300px">
+					<Option v-for="item in memberClass" :value="item.id" :key="item.id">{{ item.memberClassName }}</Option>
+				</Select>
 			</Row><br />
 			<Row>
 				<Col span=12>
@@ -73,12 +74,14 @@
 	import {
 		register,
 		getMemberList,
-		delMember
+		delMember,
+		getMemberRule
 	} from '@/api/member.js'
 	import {
 		formatDate
 	} from '@/utils/dataFormat.js'
 	export default {
+		inject: ['reload'],
 		data() {
 			return {
 				member: {
@@ -88,31 +91,7 @@
 					memberTelp: ''
 				},
 				modal2: false,
-				city: [{
-						value: 'New York',
-						label: 'New York'
-					},
-					{
-						value: 'London',
-						label: 'London'
-					},
-					{
-						value: 'Sydney',
-						label: 'Sydney'
-					},
-					{
-						value: 'Ottawa',
-						label: 'Ottawa'
-					},
-					{
-						value: 'Paris',
-						label: 'Paris'
-					},
-					{
-						value: 'Canberra',
-						label: 'Canberra'
-					}
-				],
+				memberClass: [],
 				model2: 'Canberra',
 				modal1: false,
 				memberHeader: [{
@@ -134,7 +113,12 @@
 					{
 						title: '会员类型',
 						key: 'memberClassId',
-						width: 90
+						width: 90,
+						render: (h, params) => {
+							return h('div',
+								this.stateFormat(params.row, null)
+							)
+						}
 					},
 					{
 						title: '注册时间',
@@ -197,20 +181,32 @@
 			}
 		},
 		created: function() {
-			getMemberList().then(res => {
-				this.memberData = res.data
-				console.log(res.data);
-			}).catch(function(error) {
-				console.log(error);
-			});
+			this.reloadMemberData();
+			this.loadMemberClass();
 		},
 		methods: {
+			reloadMemberData: function() {
+				getMemberList().then(res => {
+					this.memberData = res.data
+					console.log(res.data);
+				}).catch(function(error) {
+					console.log(error);
+				});
+			},
+			loadMemberClass() {
+				getMemberRule().then(res => {
+					this.memberClass = res.data
+					console.log(res.data);
+				}).catch(function(error) {
+					console.log(error);
+				});
+			},
 			register: function() {
 				register(this.member);
+				this.reload();
 				this.modal1 = false;
 			},
 			registerView: function() {
-				console.log("请求会员注册")
 				this.modal1 = true;
 			},
 			showInfo: function(index) {
@@ -219,12 +215,20 @@
 			},
 			del: function() {
 				delMember(this.memberData[this.delIndex].memberTelp).then(res => {
-					this.modal2=false;
+					this.modal2 = false;
 					console.log("删除成功");
 					this.memberData.splice(this.delIndex, 1);
 				}).catch(function(error) {
 					console.log(error);
 				});
+			},
+			stateFormat: function(row, column) {
+				for (var i = 0; i < this.memberClass.length; i++) {
+					if ('' + row.memberClassId == this.memberClass[i].id) {
+						return this.memberClass[i].memberClassName;
+					}
+				}
+				return '错误';
 			},
 			ok() {
 				// this.$Message.info('Clicked ok');
