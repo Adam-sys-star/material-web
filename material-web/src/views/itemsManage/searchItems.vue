@@ -199,7 +199,7 @@
 					//将数据传给TableData
 					this.TableData = itemDatas
 					
-					this.pageNum = res.data.pages
+					this.pageNum = res.data.pages*10
 					
 					console.log(res.data)
 				}).catch(function(error){

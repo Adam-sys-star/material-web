@@ -1,6 +1,12 @@
 <template>
+	
     <div class="login-container" style="background-color: #141a48;margin: 0px;overflow: hidden;">
-    <div id="canvascontainer" ref='can'></div>
+	
+	<div align="center" style="color:white;font-family: 微软雅黑;margin-top:100px ;margin-bottom:-100px ;">
+		<h2>💊 药 店 管 理 系 统 💉</h2>
+	</div>
+	
+    <div id="canvascontainer" ref='can' ></div>
 
     <Form ref="loginForm" autoComplete="on" :model="loginForm" :rules="loginRules"  class="card-box login-form">
         <Form-item prop="username">
@@ -120,7 +126,8 @@ animate();
 				
                 this.$router.push({ path: '/' });
               }).catch(err => {
-                this.$message.error(err);
+				  
+                this.$Message.error("账号密码错误");
                 this.loading = false;
               });
             } else {
@@ -242,6 +249,7 @@ function render() {
 #canvascontainer{
   position: absolute;
   top: 0px;
+  left: -17px;
 }
 .wz-input-group-prepend{
   background-color: #141a48;
