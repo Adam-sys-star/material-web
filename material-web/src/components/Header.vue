@@ -2,8 +2,10 @@
   <navbar>
     <button class="navbar-toggler mobile-sidebar-toggler d-lg-none" type="button" @click="mobileSidebarToggle">&#9776;</button>
     <!-- <a class="navbar-brand" ></a> -->
+	
 	<img src="../../static/img/logo1.png"  width="57px"/>
-	<label style="font-size: 18px;color:white;" >药店管理系统</label>
+	<label style="font-size: 18px;color:white;margin-left: 0px;margin-top: 0px;" >药店管理系统</label>
+	
     <ul class="nav navbar-nav d-md-down-none">
       <li class="nav-item">
         <a class="nav-link navbar-toggler sidebar-toggler"  @click="sidebarMinimize">&#9776;</a>
@@ -13,25 +15,20 @@
 
     <ul class="nav navbar-nav d-md-down-none">
       
-       <li class="nav-item header-item">
-  
-
+   <!-- 
+	  <li class="nav-item header-item">
           <router-link tag="div" to='/'  style="height:55px;" class="nav-link">
             <p><Icon type="compose" size='30' color="#2d8cf0"></Icon></p>
             <p  style="color:white"> 留言管理 </p>
         </router-link> 
       </li>
         <li class="nav-item header-item">
-        
         <router-link tag="div" to='/home1'  style="height:55px;" class="nav-link">
             <p><Icon type="stats-bars" size='30' color="#2d8cf0"></Icon></p>
             <p  style="color:white"> 浏览排行 </p>
         </router-link> 
-
-
       </li>
-
-<!--   <li class="nav-item header-item">
+    <li class="nav-item header-item">
 	<Dropdown>
         <router-link tag="div" to='/'  style="height:55px;" class="nav-link">
             <p><Icon type="android-cloud" size='30' color="#2d8cf0"></Icon></p>
@@ -45,7 +42,6 @@
         </DropdownMenu>
     </Dropdown>
    </li> -->
-	  
         <li class="nav-item header-item">
          <router-link tag="div" to='/home1'  style="height:55px;" class="nav-link">
             <p><Icon type="trophy" size='30' color="#2d8cf0"></Icon></p>

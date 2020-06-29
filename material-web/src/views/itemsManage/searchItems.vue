@@ -62,24 +62,24 @@
 					{
 						title: '货号',
 						key: 'id',
-						width:150,
+						width:160,
 						align: 'center',
 					},
 					{
 						title: '商品名称',
 						key: 'itemName',
-						width:150,
+						width:130,
 						align: 'center',
 					},
 					{
 						title: '商品类别',
 						key: 'itemClassName',
-						width:150,
+						width:130,
 						align: 'center',
 					},{
 						title: '生产厂家',
 						key: 'itemFactoryName',
-						width:150,
+						width:100,
 						align: 'center',
 					},
 					{
@@ -89,16 +89,23 @@
 						align: 'center',
 					},
 					{
+						title: '近货价',
+						key: 'itemLatelyPic',
+						sortable: true,
+						width:90,
+						align: 'center',
+					},
+					{
 						title: '零售价',
 						key: 'itemSalePrice',
 						sortable: true,
-						width:100,
+						width:90,
 						align: 'center',
 					},
 					{
 						title: '是否折扣',
 						key: 'itemDiscState',
-						width:100,
+						width:90,
 						align: 'center',
 					},
 					{
