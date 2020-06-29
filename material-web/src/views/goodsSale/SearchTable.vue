@@ -26,6 +26,7 @@
 		},
 		data() {
 			return {
+				
 				itemHeader: [{
 						title: '货号',
 						key: 'id',
@@ -104,7 +105,8 @@
 					}
 				],
 				itemData: [],
-				addedItem: []
+				addedItem: [],
+				
 			};
 		},
 		created: function() {

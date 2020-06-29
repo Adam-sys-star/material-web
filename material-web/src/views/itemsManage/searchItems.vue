@@ -21,6 +21,7 @@
 	export default {
 		data () {
 			return {
+				addedItem:[],
 				//药品名字
 				itemName:'',
 				//药品类别
@@ -141,7 +142,8 @@
 									},
 									on: {
 										click: () => {s
-											this.show(params.index)
+											// this.show(params.index)
+											this.addItem(params.index)
 										}
 									}
 								},' 添加 ✔'),
@@ -204,12 +206,18 @@
 					console.log(error);
 				});
 				
-			},show (index) {
+			},/* show (index) {
 				
 				this.$Modal.info({
 					title: 'User Info',
 					content: `货号：${this.TableData[index].id}<br>商品名称：${this.TableData[index].itemName}<br>商品类别：${this.TableData[index].itemClassId}<br>零售价：${this.TableData[index].itemSalePrice}`
 				})
+			} */
+			addItem: function(index) {
+				// 向父组件传递数据
+				this.$emit('addItemInfo', this.itemData[index]);
+				this.itemData.splice(index, 1);
+				this.addedItem.push(this.itemData[index]);
 			},
 			remove (index) {
 				this.data6.splice(index, 1);
