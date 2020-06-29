@@ -200,8 +200,21 @@
 			selectItem(){
 				//当前查询的商品信息
 				let item = this.Iteminfo
-				//商品类别的判断
 				
+				
+				//判断售价范围的判断 并 交换
+				if(item.itemSalePrice1 != "" && item.itemSalePrice2 != ""  && item.itemSalePrice1 > item.itemSalePrice2){
+					
+					let Price = item.itemSalePrice1;
+					
+					item.itemSalePrice1 = item.itemSalePrice2;
+					
+					item.itemSalePrice2 = Price;
+					
+				}
+				
+				
+				//商品类别的判断
 				if(this.itemClass[1] != null){
 					item.itemClassId = this.itemClass[1];
 				}else if(this.itemClass[0] != null){

@@ -1,7 +1,9 @@
 <template>
   <navbar>
     <button class="navbar-toggler mobile-sidebar-toggler d-lg-none" type="button" @click="mobileSidebarToggle">&#9776;</button>
-    <a class="navbar-brand" ></a>
+    <!-- <a class="navbar-brand" ></a> -->
+	<img src="../../static/img/logo1.png"  width="57px"/>
+	<label style="font-size: 18px;color:white;" >药店管理系统</label>
     <ul class="nav navbar-nav d-md-down-none">
       <li class="nav-item">
         <a class="nav-link navbar-toggler sidebar-toggler"  @click="sidebarMinimize">&#9776;</a>
@@ -29,11 +31,9 @@
 
       </li>
 
-   <li class="nav-item header-item">
-        <!--   -->
-
-        <Dropdown>
-      <router-link tag="div" to='/'  style="height:55px;" class="nav-link">
+<!--   <li class="nav-item header-item">
+	<Dropdown>
+        <router-link tag="div" to='/'  style="height:55px;" class="nav-link">
             <p><Icon type="android-cloud" size='30' color="#2d8cf0"></Icon></p>
             <p  style="color:white"> 云服务器 </p>
         </router-link>
@@ -41,78 +41,71 @@
             <DropdownItem>Linux</DropdownItem>
             <DropdownItem>Mac OS X</DropdownItem>
             <DropdownItem>Windows</DropdownItem>
-            
             <DropdownItem>Core OS</DropdownItem>
         </DropdownMenu>
     </Dropdown>
-
-
-
-      </li>
-
-
+   </li> -->
+	  
         <li class="nav-item header-item">
-      
-
          <router-link tag="div" to='/home1'  style="height:55px;" class="nav-link">
             <p><Icon type="trophy" size='30' color="#2d8cf0"></Icon></p>
             <p  style="color:white"> 销量排行 </p>
         </router-link> 
-
-
-      </li>
-
-
-
-     
+       </li>
     </ul>
 
 
     <ul class="nav navbar-nav ml-auto">
-      
-      <li class="nav-item d-md-down-none">
-        <a class="nav-link" ><Icon type="android-notifications" size="20"></Icon><span class="badge badge-pill badge-danger">5</span></a>
-      </li>
-
-
-      <Dropdown class="nav-item">
+      <!-- <li class="nav-item d-md-down-none">
+        <a class="nav-link" >
+			<Icon type="android-notifications" size="20"></Icon>
+			<span class="badge badge-pill badge-danger">5</span>
+		</a>
+      </li> -->
+      <Dropdown class="nav-item" >
         <a href="javascript:void(0)">
-           <span slot="button">
-          <img src="static/img/avatars/6.jpg" class="img-avatar" alt="o">
-          <span class="d-md-down-none">admin</span>
+			
+           <span slot="button" >
+			  <img :src="imgsrc"  width="45px"
+			  class="img-avatar" alt="o" style="margin-right: 10px;margin-top: -5px;" >
+			  
+			  <span class="d-md-down-none" style="margin-right: 40px;" >{{username}}</span>
+		  
           </span>
         </a>
-        <Dropdown-menu slot="list">
-            <Dropdown-item>
+        <Dropdown-menu slot="list" >
+            <!-- <Dropdown-item>
               <p class="dropdown-itemp"><Icon type="alert"></Icon>Updates<span class="badge badge-info">42</span></p>
-
-            
             </Dropdown-item>
             <Dropdown-item>
               <p class="dropdown-itemp"><Icon type="chatbox-working"></Icon>Messages<span class="badge badge-success">42</span></p>
-
             </Dropdown-item>
              <Dropdown-item>
               <p class="dropdown-itemp">  <Icon type="chatbox-working"></Icon>Messages<span class="badge badge-danger">42</span></p>
-
            </Dropdown-item>
               <Dropdown-item divided>
               <p class="dropdown-itemp"><Icon type="android-contact"></Icon> Profile</p>
-
               </Dropdown-item>
             <Dropdown-item >
               <p class="dropdown-itemp"><Icon type="android-settings"></Icon> Settings</p>
-              </Dropdown-item>
-
-                 <Dropdown-item > <a href="" @click="Logout"  ><p  class="dropdown-itemp"><Icon type="power"></Icon>Logout</p></a></Dropdown-item>
+              </Dropdown-item> -->
+			  
+			<Dropdown-item >
+				<a href="" @click="Logout"  >
+					<p  class="dropdown-itemp">
+						<Icon type="power"></Icon>
+						Logout
+					</p>
+				</a>
+			</Dropdown-item>
 
         </Dropdown-menu>
     </Dropdown>
-
- 
-      <li class="nav-item d-md-down-none">
+	
+<!--      <li class="nav-item d-md-down-none">
         <a class="nav-link navbar-toggler aside-menu-toggler"  @click="asideToggle">&#9776;</a>
-      </li>
+      </li> -->
+	  
     </ul>
   </navbar>
 </template>
@@ -125,6 +118,12 @@ export default {
   components: {
     navbar,
     
+  },
+  data() {
+	  return{
+		  imgsrc:"static/img/avatars/1.png",
+		  username:"",
+	  }
   },
   methods: {
     Logout(e){
@@ -156,6 +155,27 @@ export default {
       e.preventDefault()
       document.body.classList.toggle('aside-menu-hidden')
     }
+  },
+  created(){
+	  
+	  const empName = this.$store.getters.empName;
+	  
+	  const roles = this.$store.getters.roles;
+	  // static/img/avatars/1.png
+	  if(roles.indexOf("超级管理员") >= 0){
+		  this.imgsrc = "static/img/avatars/5.png"
+	  }else if(roles.indexOf("商品管理员") >= 0){
+		  this.imgsrc = "static/img/avatars/3.png"
+	  }else if(roles.indexOf("仓库管理员") >= 0){
+		  this.imgsrc = "static/img/avatars/4.png"
+	  }else if(roles.indexOf("销售管理员") >= 0){
+		  this.imgsrc = "static/img/avatars/2.png"
+	  }
+	  
+	  this.username = empName;
+	  
+	  
+	  
   }
 }
 </script>
