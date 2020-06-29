@@ -12,8 +12,8 @@ export function register(member) {
 	});
 }
 
+// 新建会员规则
 export function createRule(memberClassName,memberClassDiscount) {
-
 	const data = {
 		memberClassName,
 		memberClassDiscount
@@ -26,6 +26,7 @@ export function createRule(memberClassName,memberClassDiscount) {
 	});
 }
 
+// 删除会员规则
 export function delRule(ruleId){
 	const data = {
 		ruleId
@@ -38,6 +39,7 @@ export function delRule(ruleId){
 	});
 }
 
+// 删除会员
 export function delMember(memberTelp){
 	const data = {
 		memberTelp
@@ -50,6 +52,7 @@ export function delMember(memberTelp){
 	});
 }
 
+//  获取会员规则
 export function getMemberRule() {
 
 	const data = {
@@ -63,6 +66,7 @@ export function getMemberRule() {
 	});
 }
 
+// 修改或新增会员
 export function saveModify(modifyList){
 	const data = modifyList;
 	console.log("data", data)
@@ -73,6 +77,7 @@ export function saveModify(modifyList){
 	});
 }
 
+// 获取会员列表
 export function getMemberList(){
 	const data = {};
 	console.log("data", data)
@@ -83,6 +88,7 @@ export function getMemberList(){
 	});
 }
 
+//  获取单个会员信息
 export function getMemberInfo(memberTelp){
 	const data = {};
 	console.log("data", data)

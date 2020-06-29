@@ -48,10 +48,12 @@
 		</Modal>
 
 		<Row>
-			<div style="width: 80%;">
-				<Button v-on:click="createView" type="warning" style="float: right;">添加规则</Button>
-				<Button v-on:click="saveModify" type="warning" style="float: right;">保存修改</Button>
-			</div>
+			<Col span=3 offset=16>
+			<Button v-on:click="createView" type="warning" style="float: right;">添加规则</Button>
+			</Col>
+			<Col span=3>
+			<Button v-on:click="saveModify" type="warning" style="float: right;">保存修改</Button>
+			</Col>
 		</Row>
 		<br />
 		<Table border :columns="memberRuleHeader" :data="memberRuleData" height="400"></Table>
@@ -66,6 +68,7 @@
 		delRule
 	} from '@/api/member.js'
 	export default {
+		inject: ['reload'],
 		data() {
 			return {
 				memberClassName: '',
@@ -175,6 +178,7 @@
 		methods: {
 			createRule: function() {
 				createRule(this.memberClassName, this.memberClassDiscount);
+				this.reload();
 				this.modal1 = false;
 			},
 			createView: function() {
@@ -184,11 +188,12 @@
 			saveModify: function() {
 				let finalData = this.unique(this.modifyData);
 				saveModify(finalData);
+				
 				console.log(finalData);
 			},
 			del: function() {
 				delRule(this.memberRuleData[this.delIndex].id).then(res => {
-					this.modal2=false;
+					this.modal2 = false;
 					console.log("删除成功");
 					this.memberRuleData.splice(this.delIndex, 1);
 				}).catch(function(error) {

@@ -1,11 +1,12 @@
 import fetch from 'utils/fetch';
 
-export function getSaleList(startTime, endTime, key) {
+export function getSaleList(startTime, endTime, key,backSaleState) {
 
 	const data = {
 		startTime,
 		endTime,
-		key
+		key,
+		backSaleState
 	};
 	console.log("data", data)
 	return fetch({

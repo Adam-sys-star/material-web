@@ -1,3 +1,5 @@
+/*@author: Duan xiaoping*/
+// 数据格式化
 import Vue from 'vue';
 // 时间格式化
 export function formatDate(date, fmt) {
@@ -19,20 +21,21 @@ export function formatDate(date, fmt) {
 	}
 	return fmt
 }
-
+// 通过已知数组转换为符合自己要求的数组
 export function arrayReCreate(oldArr, attrMap) {
 	var newArr = [];
-	const map = new Map([
-		['salePrice', 'itemSalePrice'],
-		['saleNumber', "count"],
-		['saleAfterDiscount', 'saleAfterDiscount'],
-		['saleDiscountAmount', 'saleDiscountAmount'],
-		['totalAmount', 'totalAmount'],
-		["itemId", 'id']
-	]);
+	// attrMap 样例[新数组属性，旧数组属性]
+	// const map = new Map([
+	// 	['salePrice', 'itemSalePrice'],
+	// 	['saleNumber', "count"],
+	// 	['saleAfterDiscount', 'saleAfterDiscount'],
+	// 	['saleDiscountAmount', 'saleDiscountAmount'],
+	// 	['totalAmount', 'totalAmount'],
+	// 	["itemId", 'id']
+	// ]);
 	for (var i = 0; i < oldArr.length; i++) {
 		var obj = {};
-		map.forEach(function(value, index) {
+		attrMap.forEach(function(value, index) {
 			// console.log(index + ': ' + value);
 			Vue.set(obj, index, oldArr[i][value]);
 		});

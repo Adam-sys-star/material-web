@@ -44,7 +44,15 @@
 				model2: '',
 				// itemSaleId:'',
 
-				saleDetailHeader: [{
+				saleDetailHeader: [
+					{
+						title: '序号',
+						render: (h, params) => {
+							return h('div',
+								params.index+1
+							)
+						},
+					},{
 						title: '货号',
 						render: (h, params) => {
 						      return h("span", this.saleDetailDate[params.index].item.id);
