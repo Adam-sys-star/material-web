@@ -175,14 +175,14 @@
 
 										on: {
 											"on-change": event => {
-												console.log("数量变化", event)
+												console.log("数量变化", param)
 												//不为空，即通过验证，将值附上去，然后把虚拟字段置空
 												var obj = this.itemData[param.index];
 												console.log("obj", obj);
-												var moneyChange = (event - obj.count) * (obj.itemSalePrice);
+												var moneyChange = numberMul((event - obj.count), (obj.itemSalePrice));
 												console.log("moneyChange", moneyChange);
 												this.recalculationItemPrice(param.index, moneyChange);
-												this.recalculation(moneyChange);
+												this.recalculation(moneyChange, param.row.itemDiscState == 1);
 												param.row.count = event;
 												this.itemData[param.index].count = event;
 												console.log("this.itemData[param.index].count", this.itemData[param.index].count);
@@ -231,7 +231,7 @@
 											this.remove(params.index)
 										}
 									}
-								}, 'Delete')
+								}, '删除')
 							]);
 						}
 					}
@@ -245,10 +245,10 @@
 				var box = document.getElementById("searchField");
 				var searchInput = document.getElementById("searchInput");
 				var searchAdd = document.getElementById("search_add");
-				if (box.contains(e.target) || 
-				searchInput.contains(e.target) ||
-				 e.target.id=='search_add'||
-				 e.target.innerText=='添加 ✔') {
+				if (box.contains(e.target) ||
+					searchInput.contains(e.target) ||
+					e.target.id == 'search_add' ||
+					e.target.innerText == '添加 ✔') {
 					this.showSearch = true;
 					console.log("div之内")
 				} else {
@@ -287,16 +287,13 @@
 				});
 			},
 			searchItem: function() {
-
 				console.log("关键词", this.keyWord);
 			},
 			showSearchInfo: function() {
-				// this.uiStyle.display = 'block';
 				this.showSearch = true;
 			},
 			closeSearchInfo: function() {
 				this.showSearch = false;
-				this.uiStyle.display = 'none';
 			},
 			Logout(e) {
 				e.preventDefault();
@@ -309,6 +306,7 @@
 					this.$message.error(err);
 				});
 			},
+			// 结算创建销售单
 			settlement: function() {
 				const itemSale = {
 					employeeId: this.emp.id,
@@ -317,8 +315,16 @@
 					saleDiscountAmount: this.totalDiscount,
 					saleTotalAmount: this.total
 				}
-				var newItemData = arrayReCreate(this.itemData, null);
-				
+				const map = new Map([
+					['salePrice', 'itemSalePrice'],
+					['saleNumber', "count"],
+					['saleAfterDiscount', 'saleAfterDiscount'],
+					['saleDiscountAmount', 'saleDiscountAmount'],
+					['totalAmount', 'totalAmount'],
+					["itemId", 'id']
+				]);
+				var newItemData = arrayReCreate(this.itemData, map);
+
 				// 商品数组（数量，定价，优惠金额）
 				settlement(itemSale, newItemData).then(res => {
 					this.reload();
@@ -326,22 +332,35 @@
 				// settlement("会员id","员工id",16.50,60.50,77.00);
 				console.log("结算中", this.itemData);
 			},
-			recalculation: function(money) {
+			// 计算收银台的价格变化
+			recalculation: function(money, isDisc) {
 				this.total = numberAdd(this.total, money);
-				var price = Math.round(numberMul(money, this.discount) * 100) / 100
+				var price = 0;
+				if (isDisc) {
+					price = Math.round(numberMul(money, this.discount) * 100) / 100
+				} else {
+					price = Math.round(numberMul(money, 1) * 100) / 100
+				}
 				this.finalPrice = numberAdd(this.finalPrice, price);
 				var addDiscount = numberSub(money, price)
 				this.totalDiscount = numberAdd(this.totalDiscount, addDiscount);
 			},
 
+			// 计算单个商品的价格变化
 			recalculationItemPrice: function(index, money) {
 				var totalAmount = money;
-				var saleAfterDiscount = Math.round(money * this.discount * 100) / 100
+				var saleAfterDiscount = 0;
+				if (this.itemData[index].itemDiscState == 1) {
+					saleAfterDiscount = Math.round(money * this.discount * 100) / 100
+				} else {
+					saleAfterDiscount = Math.round(money * 100) / 100
+				}
 				var saleDiscountAmount = numberSub(totalAmount, saleAfterDiscount);
 				this.itemData[index].totalAmount = numberAdd(this.itemData[index].totalAmount, money);
 				this.itemData[index].saleAfterDiscount = numberAdd(this.itemData[index].saleAfterDiscount, saleAfterDiscount);
 				this.itemData[index].saleDiscountAmount = numberAdd(this.itemData[index].saleDiscountAmount, saleDiscountAmount);
 			},
+			// 添加商品到收银台
 			addItemToCart(obj) {
 				var totalAmount = obj.itemSalePrice;
 				var saleAfterDiscount = Math.round(obj.itemSalePrice * this.discount * 100) / 100
@@ -353,10 +372,9 @@
 
 				this.itemData.push(obj);
 
-				this.recalculation(obj.itemSalePrice);
+				this.recalculation(obj.itemSalePrice, obj.itemDiscState == 1);
 				console.log("添加商品", obj);
 				console.log("收银台商品", this.itemData);
-				// this.showSearchInfo();
 			},
 			show(index) {
 				this.$Modal.info({
@@ -367,7 +385,7 @@
 			remove(index) {
 				var obj = this.itemData[index];
 				var moneyChange = -(obj.count * obj.itemSalePrice);
-				this.recalculation(moneyChange);
+				this.recalculation(moneyChange, obj.itemDiscState == 1);
 				this.itemData.splice(index, 1);
 			}
 		}

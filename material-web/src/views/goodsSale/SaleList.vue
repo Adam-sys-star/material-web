@@ -1,12 +1,14 @@
 <template>
-	<div width="90%">
+	<div width="90%" :styles="{top: '50px'}">
 		<h1 style="font-size: 60px; text-align: center;">销售记录</h1>
 		<br>
-		<Modal v-model="modal1" title="销售单明细" width="1000px" @on-ok="ok" @on-cancel="cancel">
+		<Modal v-model="modal1" title="销售单明细" width="1000px"
+		 @on-ok="ok" @on-cancel="cancel" :styles="{top: '60px'}">
 			<SaleDetail :itemSaleId="itemSaleId"></SaleDetail>
 			<div slot="footer"></div>
 		</Modal>
-		<Modal v-model="modal2" title="确认退货" width="300px" @on-ok="ok" @on-cancel="cancel">
+		<Modal v-model="modal2" title="确认退货" width="300px"
+		 :styles="{top: '60px'}" @on-ok="ok" @on-cancel="cancel">
 			<p slot="header" style="color:#f60;text-align:center">
 				<Icon type="ios-information-circle"></Icon>
 				<span width="100px">确认退货？</span>
@@ -21,17 +23,22 @@
 		</Modal>
 		<Row>
 			<Col offset="1" span="11" style="">
-			<DatePicker v-model="startTime" type="date" placeholder="Select date" style="width: 200px"></DatePicker>
+			<DatePicker v-model="startTime" type="date" placeholder="Select date" style="width: 200px" @on-change="reloadSaleData"></DatePicker>
 			--
-			<DatePicker v-model="endTime" type="date" placeholder="Select date" style="width: 200px"></DatePicker>
+			<DatePicker v-model="endTime" type="date" placeholder="Select date" style="width: 200px" @on-change="reloadSaleData"></DatePicker>
 			</Col>
 
 			<Col span="4" offset="1">
-			<Input v-model="key" placeholder="订单号/操作人/顾客名" style="width: 200px;" @keyup.enter.native="searchSaleList"></Input>
+			<Input v-model="key" placeholder="订单号/操作人/顾客名" style="width: 200px;" @keyup.enter.native="reloadSaleData"></Input>
 			</Col>
 
 			<Col span="2" offset="1">
-			<Input v-model="key" @keyup.enter.native="searchSaleList"></Input>
+			<!-- <Input v-model="key" placeholder="退货状态" @keyup.enter.native="reloadSaleData"></Input> -->
+			<Select v-model="backSaleState" style="width:100px" placeholder="退货状态" @on-change="reloadSaleData" >
+				<Option :value="0" :key="0">已退货</Option>
+				<Option :value="1" :key="1">未退货</Option>
+				<Option :value="2" :key="2">全部</Option>
+			</Select>
 			</Col>
 			<Button v-on:click="gotoView('/cashier')" type="warning" style="margin-left: 50px;">返回收银台</Button>
 		</Row>
@@ -43,13 +50,10 @@
 
 <script>
 	import SaleDetail from '@/views/goodsSale/SaleDetail.vue'
-	import {
-		getSaleList,
-		backSake
-	} from '@/api/sale.js'
-	import {
-		formatDate
-	} from '@/utils/dataFormat.js'
+	import {getSaleList,backSake} from '@/api/sale.js'
+	import {formatDate} from '@/utils/dataFormat.js'
+	import {getAllEmp} from '@/api/employee.js'
+	import {getMemberList} from '@/api/member.js'
 	export default {
 		name: "sale-list",
 		components: {
@@ -59,10 +63,10 @@
 		watch: {
 			'startTime': function(newValue) {
 				console.log('前置');
-				this.searchSaleList();
+				this.reloadSaleData();
 			},
 			'endTime': function(newValue) {
-				this.searchSaleList();
+				this.reloadSaleData();
 			}
 		},
 		data() {
@@ -70,21 +74,43 @@
 				key: "",
 				startTime: null,
 				endTime: null,
+				backSaleState:2,
 				modal1: false,
 				itemSaleId: '',
-				modal2:false,
-				saleListHeader: [{
+				modal2: false,
+				empMap:null,
+				memberMap:null,
+				saleListHeader: [
+					{
+						title: '序号',
+						width:70,
+						render: (h, params) => {
+							return h('div',
+								params.index+1
+							)
+						},
+					},{
 						title: '订单号',
 						key: 'id',
 						sortable: true
 					},
 					{
 						title: '操作员',
-						key: 'employeeId'
+						key: 'employeeId',
+						render: (h, params) => {
+							return h('div',
+								this.empMap.get(params.row.employeeId)
+							)
+						},
 					},
 					{
 						title: '顾客姓名',
-						key: 'memberId'
+						key: 'memberId',
+						render: (h, params) => {
+							return h('div',
+								this.memberMap.get(params.row.memberId)
+							)
+						},
 					},
 					{
 						title: '总金额',
@@ -111,7 +137,7 @@
 					{
 						title: '操作',
 						key: 'action',
-						width: 150,
+						width: 125,
 						align: 'center',
 						render: (h, params) => {
 							return h('div', [
@@ -133,7 +159,7 @@
 									props: {
 										type: 'error',
 										size: 'small',
-										disabled:(params.row.saleRejectRemark==0)
+										disabled: (params.row.saleRejectRemark == 0)
 									},
 									on: {
 										click: () => {
@@ -151,25 +177,16 @@
 		},
 
 		created: function() {
-			//在created函数中使用axios的get请求向后台获取用户信息数据
-			getSaleList(this.startTime, this.endTime, this.key).then(res => {
-				this.saleListData = res.data
-				console.log(res.data);
-			}).catch(function(error) {
-				console.log(error);
-				54
-			});
+			this.reloadEmpData();
+			this.reloadMemberData();
+			this.reloadSaleData();
 		},
 		methods: {
+			// 页面跳转
 			gotoView: function(path) {
 				this.$router.replace(path)
 			},
-			formatDate(value) {
 
-				this.value1 = new Date(value.saleTime); //value.createdTime是prop绑定的字段名称
-				let dateValue = this.$moment(this.value1).format("YYYY-MM-DD HH:mm:ss"); //$moment专门转化时间的插件（使用时需要下载引入）
-				return dateValue
-			},
 			Logout(e) {
 				e.preventDefault();
 				this.$store.dispatch('LogOut').then(() => {
@@ -182,18 +199,44 @@
 				});
 			},
 
-			searchSaleList: function() {
-				// this.startTime = (new Date(this.startTime)).getTime() / 1000;
-				// this.endTime = (new Date(this.endTime)).getTime() / 1000;
-				getSaleList(this.startTime, this.endTime, this.key).then(res => {
-					console.log("this.key", this.key);
+			// 重新载入销售单
+			reloadSaleData: function() {
+				getSaleList(this.startTime, this.endTime, this.key,this.backSaleState).then(res => {
 					this.saleListData = res.data
 					console.log(res.data);
 				}).catch(function(error) {
 					console.log(error);
 				});
 			},
+			
+			//导入员工数据，用于显示时替换员工id 
+			reloadEmpData: function() {
+				getAllEmp().then(res => {
+					var empList = res.data
+					this.empMap = new Map([]);
+					for(var i=0;i<empList.length;i++){
+						this.empMap.set(empList[i].id,empList[i].empName)
+					}
+					console.log("员工列表信息",res.data);
+				}).catch(function(error) {
+					console.log(error);
+				});
+			},
+			//导入客户数据，用于显示时替换客户id
+			reloadMemberData: function() {
+				getMemberList().then(res => {
+					var memberList = res.data;
+					this.memberMap = new Map([]);
+					for(var i=0;i<memberList.length;i++){
+						this.memberMap.set(memberList[i].memberTelp,memberList[i].memberName)
+					}
+					console.log("会员列表信息",res.data);
+				}).catch(function(error) {
+					console.log(error);
+				});
+			},
 
+			// 退货
 			del: function() {
 				backSake(this.saleListData[this.delIndex].id).then(res => {
 					this.modal2 = false;
@@ -205,14 +248,9 @@
 			},
 
 			show(index) {
-
 				this.itemSaleId = this.saleListData[index].id;
-
 				console.log("itemSaleId", this.itemSaleId);
 				this.modal1 = true;
-			},
-			remove(index) {
-				this.data6.splice(index, 1);
 			},
 			ok() {
 				// this.$Message.info('Clicked ok');
