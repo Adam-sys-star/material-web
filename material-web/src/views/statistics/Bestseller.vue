@@ -26,7 +26,8 @@
 
 <script>
 	import {
-		loadTurnoverData
+		loadTurnoverData,
+		loadBestsellerData
 	} from '@/api/statistics'
 	import Vue from 'vue';
 	export default {
@@ -38,35 +39,36 @@
 				},
 				bestsellerHeader: [{
 						title: '商品货号',
-						key: 'dateTime',
-						width: 120,
+						key: 'itemId',
+						width: 160,
 						sortable: true
 					},
 					{
 						title: '商品名称',
-						width: 100,
-						key: 'cost'
+						width: 135,
+						key: 'itemName'
 					},
 					{
 						title: '商品类别',
-						width: 120,
-						key: '零售价'
+						width: 150,
+						key: 'itemClassName'
 					},
 					{
 						title: '销售数量',
-						width: 100,
-						key: 'saleVolume'
+						
+						key: 'totalNun'
 					},
 					{
 						title: '销售额',
-						width: 130,
-						key: 'saleVolumeIncrease'
+						
+						key: 'totalVolume'
 					},
 					{
 						title: '库存量',
-						width: 110,
-						key: 'saleNum'
+						
+						key: 'stock'
 					}
+					
 				],
 				bestsellerData: [],
 			}
