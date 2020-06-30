@@ -89,7 +89,7 @@
 						align: 'center',
 					},
 					{
-						title: '近货价',
+						title: '进货价',
 						key: 'itemLatelyPic',
 						sortable: true,
 						width:90,
