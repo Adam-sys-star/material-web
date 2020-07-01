@@ -81,7 +81,7 @@
 		<br /><br /><br />
 		
 		<!-- 最近价格 -->
-		<label style=""  >最近价格：</label>
+		<label style=""  >进货价格：</label>
 		<label  style="width: 95px;"  class="lable1"
 		id="itemLatelyPic" >{{Iteminfo.itemLatelyPic}}</label>
 		
