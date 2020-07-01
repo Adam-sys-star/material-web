@@ -111,8 +111,13 @@ export const asyncRouterMap = [
 	     component: {render (c) { return c('router-view') }},
 	     children: [ {path: 'shopchart',name: '商场统计图表',icon:'stats-bars',component: _import('charts/ShopChart'), hidden:false, },
 	                 {path: 'radarchart',name: '雷达图',icon:'arrow-graph-up-right',component: _import('charts/RadarChart')},
-	                 {path: 'cakechart',name: '蛋糕销量图表',icon:'ios-analytics',component: _import('charts/CakeChart')}
-	               ]
+	                 {path: 'cakechart',name: '蛋糕销量图表',icon:'ios-analytics',component: _import('charts/CakeChart')},
+					 // {path: 'salechart',name: 'salechart ',icon:'ios-analytics',component: _import('charts/SaleChart')},
+					 // {path: 'DashChartLarge',name: 'DashChartLarge',icon:'ios-analytics',component: _import('charts/DashChartLarge')},
+					 // {path: 'DashChartVisitor',name: 'DashChartVisitor',icon:'ios-analytics',component: _import('charts/DashChartVisitor')},
+					 // {path: 'IntroChartCount',name: 'IntroChartCount',icon:'ios-analytics',component: _import('charts/IntroChartCount')},
+					 // {path: 'IntroChartPie',name: 'IntroChartPie',icon:'ios-analytics',component: _import('charts/IntroChartPie')},
+				   ]
 	   },
 	   {path: '/markdown',name: 'Markdown',icon:"android-list",component: _import('Markdown')},
 	   {path: '/introduction',name: '介绍',icon:'thumbsup',component: _import('Introduction')},

@@ -5,7 +5,6 @@
 <Row>
     <Col :md="24">
           <intro-chart-count> </intro-chart-count>
-
     </Col>
 
 </Row>
@@ -82,7 +81,6 @@
         </Col>
 
          <Col :md="12" >
-
           <intro-chart-pie> </intro-chart-pie>
         </Col>
 

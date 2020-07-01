@@ -13,3 +13,14 @@ export function selectAllRemain(remain,pageNO,pageSize){
 	});
 	
 }
+
+//查询商品类别的库存
+export function getClassRemain(classId){
+	
+	return fetch({
+		url:'/material/repoRemain/getClassRemain',
+		method:'get',
+		params:{"classId":classId}
+	});
+	
+}

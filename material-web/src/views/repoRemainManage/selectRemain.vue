@@ -49,15 +49,25 @@
 		<br />
 		<Page :total="pageNum" ref="pageno" :page-size="pageSize" show-elevator @on-change="onChange" />
 		
+		<br /><br />
+		<remain-visitor> </remain-visitor>
+		
 	</div>
 </template>
 <script>
-	 
+	
 	import {searchItemClass} from '@/api/searchItem.js';
 	import {selectAllRemain} from '@/api/searchRemain.js';
 	import { validateNum } from 'utils/validate';
+	//数据饼状图
+	import RemainVisitor from './RemainVisitor.vue';
+	
+	import {getClassRemain} from './RemainVisitor.vue';
+	
+	
 	
     export default {
+		components:{RemainVisitor},
         data () {
             return {
 				Remaininfo:{
@@ -187,7 +197,7 @@
 										icon:"eye",
 									},
 									style: {
-										width:"60px",
+										width:"65px",
 										height :"30px",
 									},
 									on: {
@@ -264,7 +274,11 @@
 				// console.log(remain)
 				selectAllRemain(remain,this.pageNo,this.pageSize).then( res => {
 					
-					this.pageNum = res.data.pages*this.pageSize
+					
+					console.log(res)
+					
+					// this.pageNum = res.data.pages*this.pageSize
+					this.pageNum = res.data.total
 					
 					var itemDatas = res.data.list;
 					
@@ -272,7 +286,12 @@
 					
 				});
 				
-				
+				//修改饼状图
+				if(this.itemClass[0] != null){
+					getClassRemain(this.itemClass[0]);
+				}else{
+					getClassRemain(0);
+				}
 				
 			},
 			//搜索商品类别

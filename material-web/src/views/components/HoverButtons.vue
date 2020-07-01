@@ -11,7 +11,7 @@
           <hover-button type="height" shap="full"> HOVER ONE</hover-button>
           <hover-button type="height" shap="half"> HOVER TWO</hover-button>
           <hover-button type="width"  shap="full"> HOVER THREE</hover-button>
-          <hover-button type="width"  shap="half"> HOVER FOUR</hover-button> 
+          <hover-button type="width"  shap="half"> HOVER FOUR</hover-button>
           <hover-button type="lean"  > HOVER FIVE</hover-button>  
         </p>
       </section>
