@@ -23,3 +23,19 @@ export function getAllOrder(){
 
 	});
 }
+
+export function findSupplierNameByItemId(itemId){
+	return fetch({
+		url: '/material/order/findSupplierNameByItemId',
+		method: 'get',
+		params:{itemId}
+	})
+}
+
+export function findInPriceByItemIdAndSupplierName(itemId,supplierName){
+	return fetch({
+		url:'/material/order/findInPriceByItemIdAndSupplierName',
+		method:'get',
+		params:{itemId,supplierName}
+	})
+}

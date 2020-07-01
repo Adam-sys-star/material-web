@@ -2,11 +2,11 @@
 	<div>
 		<Form :model="formItem" :label-width="80">
 			<Row>
-				<Col span="11">
+				<Col span="12">
 				<FormItem label="时间">
-					<DatePicker type="date" placeholder="开始时间" v-model="formItem.startTime"></DatePicker>
+					<DatePicker type="date" placeholder="开始时间" v-model="formItem.startTime" @on-change="reloadData"></DatePicker>
 					--
-					<DatePicker type="date" placeholder="截至时间" v-model="formItem.endTime"></DatePicker>
+					<DatePicker type="date" placeholder="截至时间" v-model="formItem.endTime" @on-change="reloadData"></DatePicker>
 				</FormItem>
 				</Col>
 				<Col span="6">
@@ -21,82 +21,81 @@
 
 				<Col span="6">
 				<FormItem label="统计周期">
-					<Select v-model="formItem.cycle" style="position: absolute;">
-					<!-- 	<Option value="beijing">New York</Option>
-						<Option value="shanghai">London</Option>
-						<Option value="shenzhen">Sydney</Option> -->
+					<Select v-model="formItem.cycle" style="position: absolute;" @on-change="reloadData">
+						<Option value="YEAR">年</Option>
+						<Option value="HALF_YEAR">半年</Option>
+						<Option value="QUARTER">季度</Option>
+						<Option value="MONTH">月</Option>
 					</Select>
 				</FormItem>
 				</Col>
-				<Col span=2>
-					<Button v-on:click="reloadData">测试</Button>
-				</Col>
 			</Row>
 		</Form>
-		<Table border :columns="saleListHeader" :data="saleListData" height="400"></Table>
+		<Table border :columns="turnoverHeader" :data="turnoverData" height="400"></Table>
 	</div>
 </template>
 
 <script>
-	import {loadTurnoverData} from '@/api/statistics'
-	import {Select,Option} from 'view-design';
+	import {
+		loadTurnoverData
+	} from '@/api/statistics'
 	import Vue from 'vue';
-	Vue.component('Select', Select);
-	Vue.component('Option', Option);
 	export default {
 		data() {
 			return {
 				formItem: {
 					itemClass: '',
-					cycle: '',
+					cycle: 'YEAR',
 					startTime: '',
 					endTime: ''
 				},
-				saleListHeader: [{
+				turnoverHeader: [{
 						title: '时间',
-						key: 'id',
-						width: 100,
+						key: 'dateTime',
+						width: 120,
+
+						style: "font-size:30px",
 						sortable: true
 					},
 					{
 						title: '进货成本',
 						width: 100,
-						key: 'employeeId'
+						key: 'cost'
 					},
 					{
 						title: '成本同比增长',
 						width: 120,
-						key: 'memberId'
+						key: 'costIncrease'
 					},
 					{
 						title: '销售额',
 						width: 100,
-						key: 'saleTotalAmount'
+						key: 'saleVolume'
 					},
 					{
 						title: '销售额同比增长',
 						width: 130,
-						key: 'saleDiscountAmount'
+						key: 'saleVolumeIncrease'
 					},
 					{
 						title: '销售数量',
-						width: 90,
-						key: 'saleAfterDiscount'
-					}, 
+						width: 110,
+						key: 'saleNum'
+					},
 					{
 						title: '销售数量同比增长',
 						width: 135,
-						key: 'saleAfterDiscount'
-					}, 
+						key: 'saleNumIncrease'
+					},
 					{
 						title: '总利润',
 						width: 100,
-						key: 'saleAfterDiscount'
-					}, 
+						key: 'profit'
+					},
 					{
 						title: '总利润同比增长',
 						width: 130,
-						key: 'saleAfterDiscount'
+						key: 'profitIncrease'
 					},
 
 					{
@@ -110,19 +109,24 @@
 						sortable: true
 					}
 				],
-				saleListData: [],
+				turnoverData: [],
 			}
 		},
-		created: () => {
-			
+		created: function() {
+			this.reloadData();
 		},
-		methods:{
-			reloadData:function(res){
+		methods: {
+			reloadData: function(res) {
 				let data = {
 					...this.formItem
 				}
 				console.log(this.formItem)
-				loadTurnoverData(data);
+				loadTurnoverData(data).then(res => {
+					this.turnoverData = res.data;
+					console.log("营业额统计", res.data)
+				}).catch(error => {
+					console.log("错误", error)
+				});
 			}
 		}
 	}
