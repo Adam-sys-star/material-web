@@ -11,6 +11,9 @@
 	import {
 		searchItem
 	} from '@/api/searchItem.js';
+	import{findSupplierNameByItemId} from '../../api/order.js';
+	import {findInPriceByItemIdAndSupplierName} from '../../api/order.js'
+	import Vue from 'vue';
 	export default {
 
 		name: 'searchable-table',
@@ -54,6 +57,13 @@
 						title: '规格/单位',
 						key: 'itemUnit',
 						// width:100,
+						align: 'center',
+					},
+					{
+						title: '近货价',
+						key: 'itemLatelyPic',
+						sortable: true,
+						width:90,
 						align: 'center',
 					},
 					{
@@ -130,10 +140,38 @@
 				console.log("keyWord", keyWord)
 			},
 			addItem: function(index) {
-				// 向父组件传递数据
+				var supplierName=[];
+				findSupplierNameByItemId(this.itemData[index].id).then(res=>{
+					console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+					// var supplierName={};
+					supplierName=res.data;
+					console.log("supplierName",supplierName);
+					Vue.set(this.itemData[index],'supplierName',supplierName);
+					// 向父组件传递数据
+					console.log("cccccccccccccccccccccccc")
+					this.$emit('addItemInfo', this.itemData[index]);
+					this.itemData.splice(index, 1);
+					this.addedItem.push(this.itemData[index]);
+				}).catch(function(error){
+					console.log(error);
+				})
+				/* // 向父组件传递数据
+				console.log("cccccccccccccccccccccccc")
 				this.$emit('addItemInfo', this.itemData[index]);
 				this.itemData.splice(index, 1);
-				this.addedItem.push(this.itemData[index]);
+				this.addedItem.push(this.itemData[index]); */
+				// console.log("hahahhahhahahha",supplierName[0]);
+				/* findInPriceByItemIdAndSupplierName(this.itemData[index].id,supplierName[0]).then(res=>{
+					var inPrice={};
+					inPrice=res.data;
+					
+					Vue.set(this.itemData[index],'inPrice',inPrice);
+					console.log("zzzzzzzzzzzzzzzzzzzzz",inPrice);
+				}).catch(function(error){
+					
+					console.log(error);
+				}) */
+				
 			},
 			// 两个数组取差集
 			getDifferenceSet: function(arr1, arr2, typeName) {

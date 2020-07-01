@@ -20,7 +20,10 @@
 	import store from '@/store'
 	import {dealOrder} from '../../api/order.js'
 	import {arrayReCreate} from '@/utils/dataFormat.js'
+	import {findSupplierNameByItemId} from '../../api/order.js'
+	import {findInPriceByItemIdAndSupplierName} from '../../api/order.js'
     export default {
+		
 		inject: ['reload'],
 		components:{
 			SearchTable
@@ -28,6 +31,7 @@
 		},
         data () {
             return {
+				names:[],
 				keyWord: '',
 				showSearch: false,
 				uiStyle: {
@@ -113,6 +117,72 @@
 					    key: 'itemFactoryName'
 					},
 					{
+						title:'供应商',
+						key:'supplierName',
+						  /* render: (h, params) => {
+						         return h('Select', {
+						             props:{
+						                 value: this.data[params.index].supplierName,
+						             },
+						             on: {
+						                 'on-change':(value) => {
+						                     this.data[params.index].supplierName = value;
+						                 }
+						             },
+						         },
+						         this.supplierNames.map(function(type){
+						             return h('Option', {
+						                 props: {value: type}
+						             }, type);
+						         })
+						         );
+						     } */
+							 render: (h, params) => {
+							     return h('Select', {
+							         props:{
+							             // value: this.data[params.index].volumeType,
+										  value: this.itemData[params.index].supplierName,
+							         },
+							         on: {
+							             'on-change':(event) => {
+							                 // this.itemData[params.index].supplierName[0] = event;
+											 // findInPriceByItemIdAndSupplierName(itemData[params.index].id,this.itemData[params.index].supplierName[0]);
+											 findInPriceByItemIdAndSupplierName(this.itemData[params.index].id,event).then(res=>{
+												 var inPrice={};
+												 inPrice=res.data;
+												 console.log("新的进货价",inPrice);
+												 Vue.set(this.itemData[params.index],'inPrice',inPrice);
+												 Vue.set(this.itemData[params.index],'supplierName',event);
+											 }).catch(err=>{
+												 console.log("错误错误啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊");
+												 console.log(err);
+											 })
+							             }
+							         },
+							     },
+							    /* [
+							         h('Option',{
+							             props: {
+							                 value: '1'
+							             }
+							         },'option1'),
+							         h('Option',{
+							             props: {
+							                 value: '2'
+							             }
+							         },'option2')
+							     ] */
+								 this.names[params.index].map(function(type){
+								     return h('Option', {
+								         props: {value: type}
+								     }, type);
+								 })
+							     );
+							 },
+						 
+
+					},
+					{
 						title: '操作',
 						key: 'action',
 						width: 150,
@@ -126,7 +196,8 @@
 									},
 									on: {
 										click: () => {
-											this.remove(params.index)
+											this.remove(params.index);
+											
 										}
 									}
 								}, '删除')
@@ -181,12 +252,33 @@
 			
 				
 				Vue.set(obj,'itemNumber',1);
-				this.itemData.push(obj);
+				// this.itemData.push(obj);
+				
+				//this.supplierNames=this.itemData[this.itemData.length-1].supplierName;
+				// this.names.push(this.itemData[this.itemData.length-1].supplierName);
+				this.names.push(obj.supplierName);
+				
+				// this.supplierNames=this.names[this.names.length-1];
+				
+				
 			
 				// this.recalculation(obj.itemSalePrice);
-				console.log("添加商品", obj);
-				console.log("收银台商品", this.itemData);
+				
 				// this.showSearchInfo();
+				findInPriceByItemIdAndSupplierName(obj.id,obj.supplierName[0]).then(res=>{
+					var inPrice={};
+					inPrice=res.data;
+					Vue.set(obj,'inPrice',inPrice);
+					Vue.set(obj,'supplierName',obj.supplierName[0]);
+					this.itemData.push(obj);
+					
+					
+					console.log("zzzzzzzzzzzzzzzzzzzzz",inPrice);
+					
+				}).catch(function(error){
+					console.log("999999999999999999999999999")
+					console.log(error);
+				})
 			},
 				
 			submit:function(){
@@ -200,7 +292,9 @@
 					['itemUnit', 'itemUnit'],
 					['itemSalePrice', 'itemSalePrice'],
 					['itemNumber', 'itemNumber'],
-					['itemFactoryName','itemFactoryName']
+					['itemFactoryName','itemFactoryName'],
+					['inPrice','inPrice'],
+					['supplierName','supplierName']
 				]);
 				var newItemData = arrayReCreate(this.itemData, map);
 				
@@ -208,6 +302,8 @@
 					this.reload();
 					}
 				)
+				//提交后将names清空
+				this.names=[];
 			},
 			remove(index) {
 				
