@@ -47,10 +47,12 @@ export const asyncRouterMap = [
     hidden:false,
     children: [ 
      {path: '/dashboard',name: 'Dashboard',icon:'speedometer',component: _import('Dashboard')},
-	 {path: '/itemsManage',name: '商品管理',redirect: '/itemsManage/itemTable',icon:'speedometer',meta: { role:["商品管理员"] },
-	 		component: {render (c) { return c('router-view') }},
-	 		children: [ {path: 'itemTable',name: '商品查询',icon:'speedometer',component: _import('itemsManage/itemTable'), hidden:false },
-						{path: 'searchItems',name: '商品搜索',icon:'speedometer',component: _import('itemsManage/searchItems')},
+	 
+	 // {path: '/itemsManage/itemTable',name: '商品维护',icon:'thumbsup',component: _import('itemsManage/itemTable')},
+	 {path: '/itemsManage',name: '商品',redirect: '/itemsManage/itemTable',icon:'speedometer',meta: { role:["商品管理员"] },
+	 		component: {render (c) { return c('router-view')} },
+	 		children: [ {path: 'itemTable',name: '商品维护',icon:'speedometer',component: _import('itemsManage/itemTable') },
+						{path: 'searchItems',name: '商品搜索',icon:'speedometer',component: _import('itemsManage/searchItems'),hidden:true},
 						{path: 'maintainItem',name: '商品维护',icon:'speedometer',component: _import('itemsManage/maintainItem'),hidden:true},
 	 		]
 	 },
@@ -69,11 +71,10 @@ export const asyncRouterMap = [
 	  
 	  },
 	  {path: '/repoRemainManage',name: '库存管理', icon:'pie-graph',
-	    component: {render (c) { return c('router-view') }},
-	  		children: [ 
-				{path: 'selectRemain',name: '库存查询',icon:'stats-bars',component: _import('repoRemainManage/selectRemain'), hidden:false, },
-	  		          ]
-	  
+	    component: {render (c) { return c('router-view') }},meta: { role:["仓库管理员"] },
+		children: [
+			{path: 'selectRemain',name: '库存查询',icon:'stats-bars',component: _import('repoRemainManage/selectRemain'), hidden:false, },
+				  ]
 	  },
 	  {path: '/employees',name: '员工信息',icon:'ios-list-outline',component: _import('employees/Employees')},
       {path: '/tabledetail/:id',name: 'TableDetail', hidden:true, component: _import('TableDetail')},
@@ -102,7 +103,7 @@ export const asyncRouterMap = [
 	                 {path: 'datepicker',name: 'DatePicker',icon:'ios-calendar-outline',component: _import('components/DatePicker')},
 	                 {path: 'form',name: 'Form表单',icon:'ios-list-outline',component: _import('components/Form')},
 	  					// {path: 'employees',name: '员工信息',icon:'ios-list-outline',component: _import('components/Employees')},
-	  					{path: 'modal',name: 'Modal对话框',icon:'ios-chatbubble-outline',component: _import('components/Modal')},
+	  				 {path: 'modal',name: 'Modal对话框',icon:'ios-chatbubble-outline',component: _import('components/Modal')},
 	                 {path: 'select',name: 'Select选择器',icon:'ios-arrow-down',component: _import('components/Select')},
 	                 {path: 'spin',name: 'Spin加载中',icon:'load-d ',component: _import('components/Spin')},
 	                 {path: 'steps',name: 'Steps步骤条',icon:'ios-checkmark-outline',component: _import('components/Steps')},
@@ -116,8 +117,13 @@ export const asyncRouterMap = [
 	     component: {render (c) { return c('router-view') }},
 	     children: [ {path: 'shopchart',name: '商场统计图表',icon:'stats-bars',component: _import('charts/ShopChart'), hidden:false, },
 	                 {path: 'radarchart',name: '雷达图',icon:'arrow-graph-up-right',component: _import('charts/RadarChart')},
-	                 {path: 'cakechart',name: '蛋糕销量图表',icon:'ios-analytics',component: _import('charts/CakeChart')}
-	               ]
+	                 {path: 'cakechart',name: '蛋糕销量图表',icon:'ios-analytics',component: _import('charts/CakeChart')},
+					 // {path: 'salechart',name: 'salechart ',icon:'ios-analytics',component: _import('charts/SaleChart')},
+					 // {path: 'DashChartLarge',name: 'DashChartLarge',icon:'ios-analytics',component: _import('charts/DashChartLarge')},
+					 // {path: 'DashChartVisitor',name: 'DashChartVisitor',icon:'ios-analytics',component: _import('charts/DashChartVisitor')},
+					 // {path: 'IntroChartCount',name: 'IntroChartCount',icon:'ios-analytics',component: _import('charts/IntroChartCount')},
+					 // {path: 'IntroChartPie',name: 'IntroChartPie',icon:'ios-analytics',component: _import('charts/IntroChartPie')},
+				   ]
 	   },
 	   {path: '/markdown',name: 'Markdown',icon:"android-list",component: _import('Markdown')},
 	   {path: '/introduction',name: '介绍',icon:'thumbsup',component: _import('Introduction')},

@@ -7,7 +7,8 @@
 		</Input>
 		<!-- 商品类别 -->
 		<label style="float: left;font-size: 15px;margin-top: 4px;margin-left: 30px;" >商品类别：</label>
-		<Cascader :data="itemclass" change-on-select  v-model="itemClass"  style="width: 250px;float: left;"></Cascader>
+		<Cascader :data="itemclass" change-on-select  v-model="itemClass" placeholder="请选择商品类别" filterable
+		 style="width: 250px;float: left;" ></Cascader>
 		
 		<!-- 添加商品  按钮 -->
 		<Button type="warning" @click="maintainItem"
@@ -44,6 +45,7 @@
 <script>
 	 
 	import {searchItemClass,selectItem,deleteItem} from '@/api/searchItem.js';
+	import { validateNum } from 'utils/validate';
 	
     export default {
         data () {
@@ -201,6 +203,30 @@
 				//当前查询的商品信息
 				let item = this.Iteminfo
 				
+				 if(item.itemSalePrice1 != ""){
+					 //判断数字格式
+					let b = validateNum(item.itemSalePrice1);
+					 if(!b){
+					 	this.$Notice.error({
+					 	    title: '格式错误',
+					 	    desc:  '售价范围格式为数字、小数点'
+					     });
+						 return;
+					 }
+				 }
+				
+				if(item.itemSalePrice2 != ""){
+					 //判断数字格式
+					let b = validateNum(item.itemSalePrice2);
+					if(!b){
+						this.$Notice.error({
+							title: '格式错误',
+							desc:  '售价范围格式为数字、小数点'
+						});
+						return;
+						
+					}
+				}
 				
 				//判断售价范围的判断 并 交换
 				if(item.itemSalePrice1 != "" && item.itemSalePrice2 != ""  && item.itemSalePrice1 > item.itemSalePrice2){
