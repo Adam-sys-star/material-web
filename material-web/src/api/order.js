@@ -39,3 +39,19 @@ export function findInPriceByItemIdAndSupplierName(itemId,supplierName){
 		params:{itemId,supplierName}
 	})
 }
+
+export function getOrderResp(pageNum){
+	return fetch({
+		url:'/material/order/backOrderRespByPage',
+		method:'get',
+		params:{pageNum}
+	})
+}
+
+export function getOrderRespByExample(itemId, itemName){
+	return fetch({
+		url:'/material/order/findOrderRespByExample',
+		method:'get',
+		params:{itemId,itemName}
+	})
+}

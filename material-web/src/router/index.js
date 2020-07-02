@@ -57,9 +57,15 @@ export const asyncRouterMap = [
 	  {path: '/ordes',name: '订单管理', icon:'pie-graph',
 	    component: {render (c) { return c('router-view') }},
 		children: [ {path: 'order',name: '药品采购',icon:'stats-bars',component: _import('orders/order'), hidden:false, },
-		            {path: 'myorder',name: '我的订单',icon:'arrow-graph-up-right',component: _import('orders/myOrder')},
-		            {path: 'cakechart',name: '蛋糕销量图表',icon:'ios-analytics',component: _import('charts/CakeChart')}
+		            {path: 'myorder',name: '订货单明细',icon:'arrow-graph-up-right',component: _import('orders/myOrder')}
 		          ]
+	  
+	  },
+	  {path: '/ordes',name: '收货管理', icon:'pie-graph',
+	    component: {render (c) { return c('router-view') }},
+	  		children: [ {path: 'order',name: '收货列表',icon:'stats-bars',component: _import('orders/order'), hidden:false, },
+	  		            {path: 'myorder',name: '收货详情列表',icon:'arrow-graph-up-right',component: _import('orders/myOrder')}
+	  		          ]
 	  
 	  },
 	  {path: '/repoRemainManage',name: '库存管理', icon:'pie-graph',
