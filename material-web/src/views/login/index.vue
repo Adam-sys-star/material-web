@@ -22,7 +22,7 @@
         <Form-item>
             <Button type="primary" @click="handleLogin('loginForm')" long>登录</Button>
         </Form-item>
-           </Form>
+    </Form>
 
     </div>
 </template>

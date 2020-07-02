@@ -104,7 +104,7 @@ export default {
     return {
 
 option : {
-    backgroundColor: '#c1c1c1',
+    backgroundColor: '#49586e',
 	//标题
     title: {
         text: '商品类别库存分配图',

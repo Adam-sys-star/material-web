@@ -204,14 +204,21 @@
 										click: () => {
 											//获得当前行
 											let index = params.index;
-											//当前行的第一个数据
-											let id = this.TableData[index].id;
+											
+											let TableData = this.TableData[index];
 											//路由转发
 											this.$router.push({
-												path: "",
+												path: "./RemainDetail",
 												//传递参数
 												query: {
-													id: id
+													id:TableData.id,
+													itemName:TableData.itemName,
+													itemClassName:TableData.itemClassName,
+													itemFactoryName:TableData.itemFactoryName,
+													repoName:TableData.repoName,
+													totalRemain:TableData.totalRemain,
+													remainAllInPic:TableData.remainAllInPic,
+													inRepoDate:TableData.inRepoDate,
 											}});
 											
 										}
