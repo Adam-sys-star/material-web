@@ -55,7 +55,7 @@
 					margin-top: 15px;width: 18.5%;float: left;" />
 					<label style="float: left;font-size: 15px;font-weight: 500;color: #979797;" >&nbsp;数 据 统 计&nbsp;</label>
 					<hr style="height:2px;border:none;border-top:2px dotted #979797;
-					margin-top: 15px;width: 6%;float: left;" />
+					margin-top: 15px;width: 69px;float: left;" />
 				</Row>
 				
 				<Row style="margin-top: 25px;">
@@ -99,7 +99,7 @@
 					<Col span="15">
 						<Table border :columns="TableColumn" :data="TableData"  ></Table>
 					</Col>
-					<Col span="9" style="margin-top: -95px;margin-left: 0px;" >
+					<Col span="9" style="margin-top: -110px;" >
 						<remain-visitor> </remain-visitor>
 					</Col>
 				</Row >
@@ -119,7 +119,9 @@
 	
 	import {selectRemainDetail,getTimesAndSup} from '@/api/searchRemain.js';
 	import { validateNum } from 'utils/validate';
-	import RemainVisitor from './RemainVisitor.vue';
+	import RemainVisitor from './RemainDetailVisitor.vue';
+	
+	import {getTheRemainDetail} from './RemainDetailVisitor.vue';
 	
 	export default {
 		components:{RemainVisitor},
@@ -136,7 +138,7 @@
 					// 供应商编号
 					supplierId:"",
 					//入库时间范围
-					inRepoDate:"",
+					inRepoDate:["",""],
 					//批次
 					times:"",
 					//库存情况
@@ -232,6 +234,9 @@
 					
 					var itemDatas = res.data.list;
 					
+					// 修改饼状图
+					getTheRemainDetail(detail.id,detail.totalRemain,detail.inRepoDate,detail.supplierId);
+					
 				});
 				
 			},
@@ -321,9 +326,10 @@
 			//获取f访问该页面时传递过来的参数
 			this.getParams()
 			
+			this.getTimesAndSup();
+			
 			this.selectTheRemainDetail();
 			
-			this.getTimesAndSup();
 			
 		}
 	}
@@ -337,6 +343,7 @@
 		margin-left: -5px;
 	}
 	.topTitleLable{
+		font-weight: bold;
 		float: left;
 		font-size: 15px;
 	}

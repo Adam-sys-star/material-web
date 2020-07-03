@@ -48,3 +48,22 @@ export function getTimesAndSup(id){
 	});
 	
 }
+
+
+export function getRemainDetail(id,totalRemain,inRepoDate,supplierId){
+	
+	const data ={
+		"id":id,
+		"totalRemain":totalRemain,
+		"inRepoDate":inRepoDate,
+		"supplierId":supplierId
+	}
+	
+	return fetch({
+		url:'/material/repoRemain/getRemainDetail',
+		method:'post',
+		data
+	});
+	
+}
+
