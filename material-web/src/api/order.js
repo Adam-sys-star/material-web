@@ -48,10 +48,10 @@ export function getOrderResp(pageNum){
 	})
 }
 
-export function getOrderRespByExample(itemId, itemName){
+export function getOrderRespByExample(itemId, itemName,pageNum){
 	return fetch({
 		url:'/material/order/findOrderRespByExample',
 		method:'get',
-		params:{itemId,itemName}
+		params:{itemId,itemName,pageNum}
 	})
 }
