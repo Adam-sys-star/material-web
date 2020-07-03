@@ -4,21 +4,21 @@
 
 	<!-- 商品货号 -->
 	<div :class="{ after: AfterIsHide }">
-		<label style=""  >商品货号：</label>
+		<label style="font-weight: bold;"  >商品货号：</label>
 		<label class="lable1" style="margin-left: 10px;" >{{Iteminfo.id}}</label>
 	
 	<br /><br /><br />
 	</div>
 	
 	<!-- 商品名称 -->
-	<label style="" >商品名称：</label>
+	<label style="font-weight: bold;" >商品名称：</label>
 	<Input type="text" v-model="Iteminfo.itemName" placeholder="请输入商品名称" id="itemName" search
 	  clearable style="" class="text" :class="{ defore: BeforeIsHide }" >
 	</Input>
 	<label class="lable1" style="width: 150px;" :class="{ after: AfterIsHide }" >{{Iteminfo.itemName}}</label>
 	
 	<!-- 商品类别 -->
-	<label style="" >商品类别：</label>
+	<label style="font-weight: bold;" >商品类别：</label>
 	<Cascader :data="itemclass" v-model="itemClass"  id="itemClassId"  :class="{ defore: BeforeIsHide }"
 	placeholder="请选择商品类别" class="text" @on-change="(value,selectedData)=>{handleListenCascader(value,selectedData)}" ></Cascader>
 	<label class="lable1" style="width: 300px;" :class="{ after: AfterIsHide }" >{{itemClassLabel}}</label>
@@ -26,7 +26,7 @@
 	<br /><br /><br />
 	
 	<!-- 规格 -->
-	<label style="" >商品规格：</label>
+	<label style="font-weight: bold;" >商品规格：</label>
 	<label class="lable1" style="width: 190px;" :class="{ after: AfterIsHide }" >{{Iteminfo.itemSpec}}</label>
 	<div :class="{ defore: BeforeIsHide }">
 		<Input type="text" v-model="Iteminfo.itemSpec1" placeholder="" id="itemSpec1" search
@@ -48,7 +48,7 @@
 	</div>
 	
 	<!-- 单位 -->
-	<label style="margin-left: 10px;" > 单 &nbsp; &nbsp; &nbsp; 位：</label>
+	<label style="font-weight: bold;margin-left: 10px;" > 单 &nbsp; &nbsp; &nbsp; 位：</label>
 	<Cascader :data="itemUnit" change-on-select  v-model="Iteminfo.itemUnit"  placeholder="单位" id="itemUnit"
 	class="" style="float: left;width: 55px;margin:30px 5px 0px 0px;" :class="{ defore: BeforeIsHide }" ></Cascader>
 	<label class="lable1" style="" :class="{ after: AfterIsHide }" >{{Iteminfo.itemUnit}}</label>
@@ -56,7 +56,7 @@
 	<br /><br /><br />
 	
 	<!-- 零售单价 -->
-	<label style="" >零售单价：</label>
+	<label style="font-weight: bold;" >零售单价：</label>
 	<Input type="text" v-model="Iteminfo.itemSalePrice" placeholder="￥" id="itemSalePrice" search
 	 :class="{ defore: BeforeIsHide }" clearable style="" class="itemSalePrice" >
 	</Input>
@@ -64,14 +64,14 @@
 	<label style="margin-left: 10px;" :class="{ defore: BeforeIsHide }">元</label>
 	
 	<!-- 享受折扣 -->
-	<label style="" >享受折扣：</label>
+	<label style="font-weight: bold;" >享受折扣：</label>
 	<Checkbox v-model="Iteminfo.itemDiscState" id="itemDiscState" 
 	style="font-size: 15px;margin-left: 10px;" >是</Checkbox>
 	
 	<br /><br /><br />
 	
 	<!-- 厂家名称 -->
-	<label style="" >厂家名称：</label>
+	<label style="font-weight: bold;" >厂家名称：</label>
 	<Input type="text" v-model="Iteminfo.itemFactoryName" placeholder="请输入厂家名称" id="itemFactoryName" search
 	  clearable style="" class="text" :class="{ defore: BeforeIsHide }">
 	</Input>
@@ -81,24 +81,24 @@
 		<br /><br /><br />
 		
 		<!-- 最近价格 -->
-		<label style=""  >进货价格：</label>
+		<label style="font-weight: bold;"  >进货价格：</label>
 		<label  style="width: 95px;"  class="lable1"
 		id="itemLatelyPic" >{{Iteminfo.itemLatelyPic}}</label>
 		
 		<!-- 拼音码 -->
-		<label style=""  >拼音码：</label>
+		<label style="font-weight: bold;"  >拼音码：</label>
 		<label  style="width: 95px;"  class="lable1"
 		id="itemSpell" >{{Iteminfo.itemSpell}}</label>
 		
 		<!-- 五笔码 -->
-		<label style=""  >五笔码：</label>
+		<label style="font-weight: bold;"  >五笔码：</label>
 		<label  style="width: 95px;"  class="lable1"
 		id="itemWubi" >{{Iteminfo.itemWubi}}</label>
 		
 		<br /><br /><br />
 		
 		<!-- 商品条码 -->
-		<label style=""  >商品条码：</label>
+		<label style="font-weight: bold;"  >商品条码：</label>
 		<img :src="Iteminfo.itemCode" width="200px" height="100px" 
 		 style="float: left;margin-top: 30px;"/>
 	

@@ -73,11 +73,6 @@ export const asyncRouterMap = [
 	  		          ],
 		},
 	  
-
-	  {path: '/repoRemainManage',name: '库存', icon:'pie-graph',
-	    component: {render (c) { return c('router-view') }},meta: { role:["仓库管理员"] }, 
-	  
-	  
 	  
 	  {path: '/inRepoManage',name: '入库', icon:'arrow-graph-up-right',component:{render(c) {return c('router-view')}},meta:{role:["仓库管理员"]},
 	  		children: [

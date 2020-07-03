@@ -2,7 +2,6 @@
 	<div>
 		
 		<Form ref="RemainDetail" autoComplete="on" :model="RemainDetail"  class="card-box">
-		    <Form-item>
 				<Row >
 					<Col span="5">
 						<label style="" class="topTitleLable" >仓库名称：</label>
@@ -34,14 +33,14 @@
 					<label style="" class="topTitleLable" > 总 成 本 ：</label>
 					<label style="" class="topLable" >{{RemainInfo.remainAllInPic}}</label>
 					</Col>
-					<Col span="6">
+					<Col span="4">
 						<label style="" class="topTitleLable" > 总 库 存 ：</label>
 						<label style="" class="topLable" >{{RemainInfo.totalRemain}}</label>
 					</Col>
-					<!-- <Col span="5">
+					<Col span="4">
 					<label style="" class="topTitleLable" >平均成本：</label>
 					<label style="" class="topLable" >{{RemainInfo.avgInPic}}</label>
-					</Col> -->
+					</Col>
 				</Row>
 				
 				<Row style="margin-top: 10px;">
@@ -109,7 +108,6 @@
 						<Page :total="pageNum" :page-size="pageSize" show-elevator @on-change="onChange" />
 					</Col>
 				</Row >
-		    </Form-item>
 		</Form>
 		
 	</div>
@@ -268,7 +266,7 @@
 					 info.remainAllInPic=query.remainAllInPic;
 					 info.inRepoDate=query.inRepoDate.substring(0,11);
 					 
-					info.avgInPic= (Math.round(info.remainAllInPic / info.totalRemain * 100)/100 )+" 件 / 元";
+					info.avgInPic= (Math.round(info.remainAllInPic / info.totalRemain * 100)/100 )+" 元 / 件";
 					
 					info.totalRemain = info.totalRemain+" 件";
 					info.remainAllInPic=info.remainAllInPic+" 元";
@@ -329,7 +327,6 @@
 			this.getTimesAndSup();
 			
 			this.selectTheRemainDetail();
-			
 			
 		}
 	}
