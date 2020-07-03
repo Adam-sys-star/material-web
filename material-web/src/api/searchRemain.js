@@ -24,3 +24,46 @@ export function getClassRemain(classId){
 	});
 	
 }
+
+//查询商品库存明细
+export function selectRemainDetail(rd){
+	
+	const data = rd;
+	
+	return fetch({
+		url:'/material/repoRemain/selectRemainDetail',
+		method:'post',
+		data
+	});
+	
+}
+
+//查询商品库存的批次和供应商
+export function getTimesAndSup(id){
+	
+	return fetch({
+		url:'/material/repoRemain/getTimesAndSup',
+		method:'get',
+		params:{"id":id}
+	});
+	
+}
+
+
+export function getRemainDetail(id,totalRemain,inRepoDate,supplierId){
+	
+	const data ={
+		"id":id,
+		"totalRemain":totalRemain,
+		"inRepoDate":inRepoDate,
+		"supplierId":supplierId
+	}
+	
+	return fetch({
+		url:'/material/repoRemain/getRemainDetail',
+		method:'post',
+		data
+	});
+	
+}
+

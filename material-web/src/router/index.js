@@ -51,30 +51,33 @@ export const asyncRouterMap = [
 	 // {path: '/itemsManage/itemTable',name: '商品维护',icon:'thumbsup',component: _import('itemsManage/itemTable')},
 	 {path: '/itemsManage',name: '商品',redirect: '/itemsManage/itemTable',icon:'speedometer',meta: { role:["商品管理员"] },
 	 		component: {render (c) { return c('router-view')} },
-	 		children: [ {path: 'itemTable',name: '商品维护',icon:'speedometer',component: _import('itemsManage/itemTable') },
+	 		children: [ {path: 'itemTable',name: '商品管理',icon:'speedometer',component: _import('itemsManage/itemTable') },
 						{path: 'searchItems',name: '商品搜索',icon:'speedometer',component: _import('itemsManage/searchItems'),hidden:true},
 						{path: 'maintainItem',name: '商品维护',icon:'speedometer',component: _import('itemsManage/maintainItem'),hidden:true},
 	 		]
 	 },
-	  {path: '/ordes',name: '订单管理', icon:'pie-graph',
-	    component: {render (c) { return c('router-view') }},
+	 
+	 {path: '/ordes',name: '订单管理', icon:'pie-graph',
+		component: {render (c) { return c('router-view') }},
 		children: [ {path: 'order',name: '药品采购',icon:'stats-bars',component: _import('orders/order'), hidden:false, },
-		            {path: 'myorder',name: '订货单明细',icon:'arrow-graph-up-right',component: _import('orders/myOrder')}
-		          ]
+					{path: 'myorder',name: '订货单明细',icon:'arrow-graph-up-right',component: _import('orders/myOrder')}
+				  ]
 	  
 	  },
+
 	  {path: '/receives',name: '收货管理', icon:'pie-graph',
 	    component: {render (c) { return c('router-view') }},
 	  		children: [ {path: 'receive',name: '收货列表',icon:'stats-bars',component: _import('receives/receive'), hidden:false, },
 	  		            // {path: 'receiveDetail',name: '收货详情列表',icon:'arrow-graph-up-right',component: _import('receives/receiveDetail')}
-	  		          ]
+	  		          ],
+		},
 	  
-	  },
-	  {path: '/repoRemainManage',name: '库存管理', icon:'pie-graph',
+	  {path: '/repoRemainManage',name: '库存', icon:'pie-graph',
 	    component: {render (c) { return c('router-view') }},meta: { role:["仓库管理员"] },
 		children: [
-			{path: 'selectRemain',name: '库存查询',icon:'stats-bars',component: _import('repoRemainManage/selectRemain'), hidden:false, },
-				  ]
+			{path: 'selectRemain',name: '库存管理',icon:'stats-bars',component: _import('repoRemainManage/selectRemain'), hidden:false, },
+			{path: 'RemainDetail',name: '库存明细管理',icon:'stats-bars',component: _import('repoRemainManage/RemainDetail'), hidden:true, },
+		]
 	  },
 	  {path: '/employees',name: '员工信息',icon:'ios-list-outline',component: _import('employees/Employees')},
       {path: '/tabledetail/:id',name: 'TableDetail', hidden:true, component: _import('TableDetail')},

@@ -1,6 +1,7 @@
 <template>
 
-    <chart :options="option" class="echarts" id="chart" style="width: 550px;height: 300px;float: left;"> </chart>
+    <chart :options="option" class="echarts" id="chart" 
+	style="margin-left: 40px;width: 350px;height: 400px;float: left;"> </chart>
 
 </template>
 
@@ -14,7 +15,7 @@
 
 <script>
 	
-import {getClassRemain} from '@/api/searchRemain.js';
+import {getRemainDetail} from '@/api/searchRemain.js';
 	
 var data = [
 	{
@@ -51,7 +52,7 @@ var data = [
 ];
 
 export default {
-	getClassRemain(classId){
+	getTheRemainDetail(id,totalRemain,inRepoDate,supplierId){
 		
 		//重新赋值
 		for(let i = 0 ; i < data.length ; i++){
@@ -59,29 +60,38 @@ export default {
 			data[i].name = "";
 		}
 		
-		getAllClassRemain(classId);
+		getAllRemainDetail(id,totalRemain,inRepoDate,supplierId);
 		
 	},
     methods:{
 		
-		getAllClassRemain(classId){
+		getAllRemainDetail(id,totalRemain,inRepoDate,supplierId){
 			
-			getClassRemain(classId).then(res => {
+			getRemainDetail(id,totalRemain,inRepoDate,supplierId).then(res => {
 				
-				let classes = res.data;
+				let info = res.data;
 				
 				let legend = this.option.legend.data;
 				
-				console.log(classes)
+				//其他总数
+				let othersum = 0;
 				
-				for(let i = 0 ; i < classes.length ; i++ ){
+				for(let i = 0 ; i < info.length ; i++ ){
 					
-					
-					data[i].value = classes[i].allTotalRemain;
-					data[i].name = classes[i].itemClassName;
-					
-					legend[i] = classes[i].itemClassName;
-					
+					//超过9个算  其他
+					if(info.length > 9 && i >= 9){
+						othersum = othersum + info[i].remainAmount;
+					}else{
+						data[i].value = info[i].remainAmount;
+						data[i].name = info[i].times;
+						legend[i] = info[i].times;
+					}
+				}
+				
+				if(othersum != 0){
+					data[9].value = othersum;
+					data[9].name = "其它";
+					legend[9] = "其它";
 				}
 				
 			});
@@ -92,12 +102,12 @@ export default {
 	//生命周期 —— 钩子函数
 	created() {
 		
-		this.getAllClassRemain(0);
+		// this.getAllRemainDetail(null,null,null,null);
 		
 	},
 	 mounted() {
 		// methods里面定义的方法, 需要赋值给window
-	   window.getAllClassRemain = this.getAllClassRemain;
+	   window.getAllRemainDetail = this.getAllRemainDetail;
 	},
   data: function () {
    
@@ -105,11 +115,11 @@ export default {
 
 option : {
     backgroundColor: '#49586e',
-	//标题
+	// 标题
     title: {
-        text: '商品类别库存分配图',
-        x: '3%',
-        y: '3%',
+        text: '批次:',
+        x: '6%',
+        y: '75%',
         textStyle: {
             fontWeight: 'normal',
             fontSize: 20,
@@ -120,29 +130,29 @@ option : {
     tooltip: {
         show: true,
         trigger: 'item',
-        formatter: "{b}: {c} ({d}%)"
+        formatter: "{b}批次: {c} ({d}%)"
     },
 	//选项卡
     legend: {
         orient: 'vertical',
-        left: '65%',
-        top: '25%',
+        left: '22%',
+        top: '75%',
         textStyle: {
             fontWeight: 'normal',
             fontSize: 18,
             color: '#fff',
         },
 		//每个选项
-        data: ["0TC类","处方类","保健食品类","药食同源类","医疗器械","个人护理"]
+        data: []
     },
 	//总环
     series: [{
         type: 'pie',
         selectedMode: 'single',
-        center: ['30%', '55%'],
+        center: ['50%', '37%'],
         radius: ['40%', '80%'],
-        // color: ['#86D560', '#AF89D6', '#59ADF3', '#FF999A', '#FFCC67'],
-        color: ['#AF89D6', '#5ab6df', '#6a8bc0', '#4acacb', '#fe8676', '#73daff'],
+        color: ['#FA5858', '#FAAC58', '#F4FA58', '#ACFA58','#82FA58',
+		 '#58FAAC', '#58FAF4','#58ACFA','#5858FA','#AC58FA'],
         label: {
             normal: {
                 position: 'inner',
