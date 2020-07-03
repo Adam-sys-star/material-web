@@ -163,7 +163,7 @@
             },
 			handleSubmit(obj) {
 				//将数组置空
-				this.data6=[];
+				this.data6=[];[]
 			                getOrderRespByExample(obj.itemId,obj.itemName).then(res=>{
 								this.totalRecords=res.data.data.length;
 								for(let i=0;i<res.data.pageSize;i++){
