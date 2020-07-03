@@ -63,10 +63,10 @@ export const asyncRouterMap = [
 		          ]
 	  
 	  },
-	  {path: '/ordes',name: '收货管理', icon:'pie-graph',
+	  {path: '/receives',name: '收货管理', icon:'pie-graph',
 	    component: {render (c) { return c('router-view') }},
-	  		children: [ {path: 'order',name: '收货列表',icon:'stats-bars',component: _import('orders/order'), hidden:false, },
-	  		            {path: 'myorder',name: '收货详情列表',icon:'arrow-graph-up-right',component: _import('orders/myOrder')}
+	  		children: [ {path: 'receive',name: '收货列表',icon:'stats-bars',component: _import('receives/receive'), hidden:false, },
+	  		            // {path: 'receiveDetail',name: '收货详情列表',icon:'arrow-graph-up-right',component: _import('receives/receiveDetail')}
 	  		          ]
 	  
 	  },
@@ -155,4 +155,6 @@ export const asyncRouterMap = [
   {path: '/member_rule',name: '会员规则',icon:"android-list",component: _import('member/MemberRule')},
   {path: '/employeeDetail',name: '员工信息详情',icon:'ios-list-outline',component: _import('employees/EmployeeDetail')},
   {path: '/addEmployee',name: '添加员工',icon:'ios-list-outline',component: _import('employees/AddEmployee')},
+  {path: '/receiveDetail',name: '收货详情列表',icon:'arrow-graph-up-right',component: _import('receives/receiveDetail')}
+  
 ];

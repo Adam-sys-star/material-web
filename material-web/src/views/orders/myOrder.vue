@@ -123,28 +123,28 @@
                     
                 ],
 				totalRecords:{},
-				pageSize:5,
-				pageNum:{}
+				pageSize:5
 				
             }
         },
         methods: {
 			onchange(currentPage){
-				console.log("currentpage",currentPage);
+				/* console.log("currentpage",currentPage);
 				//将数组置空
 				this.data6=[];
 				
-				// this.pageNo = currentPage;
+				// this.pageNo = currentPage; */
 				
-				getOrderResp().then(res=>{
+				getOrderResp(currentPage).then(res=>{
 					
 					
-						// let tmp=(currentPage-1)*res.data.pageSize;
+						/* // let tmp=(currentPage-1)*res.data.pageSize;
 							
 						for(let tmp=(currentPage-1)*res.data.pageSize;tmp<=((currentPage*res.data.pageSize)-1);tmp++){
 							this.data6.push(res.data.data[tmp]);
 						}
-						console.log("////////////////",this.data6);
+						console.log("////////////////",this.data6); */
+						this.data6=res.data.pagedList;
 						
 					
 				}).catch(err=>{
@@ -162,14 +162,16 @@
                 this.data6.splice(index, 1);
             },
 			handleSubmit(obj) {
-				//将数组置空
-				this.data6=[];[]
+				/* //将数组置空
+				this.data6=[]; */
 			                getOrderRespByExample(obj.itemId,obj.itemName).then(res=>{
-								this.totalRecords=res.data.data.length;
+								/* this.totalRecords=res.data.data.length;
 								for(let i=0;i<res.data.pageSize;i++){
 									this.data6.push(res.data.data[i]);
-								}
+								} */
 								// this.data6=res.data;
+								this.totalRecords=res.data.total;
+								this.data6=res.data.pagedList;
 							}).catch(err=>{
 								console.log(err);
 								alert("填写的字段搜索不到数据")
@@ -179,14 +181,16 @@
         },
 		created:function(){
 			getOrderResp().then(res=>{
-				console.log("resresresres",res);
+				/* console.log("resresresres",res);
 				// this.data6=res.data.list;
 				
 				for(let i=0;i<res.data.pageSize;i++){
 					this.data6.push(res.data.data[i]);
 				}
 				console.log("thiisiiiii",this.data6)
-				this.totalRecords=res.data.data.length;
+				this.totalRecords=res.data.data.length; */
+				this.totalRecords=res.data.total;
+				this.data6=res.data.pagedList;
 			}).catch(err=>{
 				console.log(err);
 			})
