@@ -77,12 +77,13 @@ export const asyncRouterMap = [
 	  {path: '/inRepoManage',name: '入库', icon:'arrow-graph-up-right',component:{render(c) {return c('router-view')}},meta:{role:["仓库管理员"]},
 	  		children: [
 	  			{path: 'selectInRepo',name: '入库管理',icon:'stats-bars',component: _import('inRepoManage/selectInRepo'), hidden:false, },
+				{path: 'InRepositoryDetail',name: '入库维护',icon:'ios-analytics',component: _import('inRepoManage/InRepositoryDetail'), hidden:true, }
 	  		]
 	  },
 	  {path: '/repoRemainManage',name: '库存', icon:'merge',component: {render (c) { return c('router-view') }},meta: { role:["仓库管理员"] },
 		children: [
 			{path: 'selectRemain',name: '库存管理',icon:'stats-bars',component: _import('repoRemainManage/selectRemain'), hidden:false, },
-			{path: 'RemainDetail',name: '库存明细管理',icon:'stats-bars',component: _import('repoRemainManage/RemainDetail'), hidden:true, },
+			{path: 'RemainDetail',name: '库存明细管理',icon:'ios-analytics',component: _import('repoRemainManage/RemainDetail'), hidden:true, },
 		]
 	  },
 	  {path: '/employees',name: '员工信息',icon:'ios-list-outline',component: _import('employees/Employees')},
