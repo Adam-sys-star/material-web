@@ -81,11 +81,11 @@
 						align: 'center',
 						width:160
 					},{
-						title: '收货人员 ( 工号 )',
+						title: '收货人员( 工号 )',
 						key: 'empName1',
 						align: 'center',
 					},{
-						title: '入库人员 ( 工号 )',
+						title: '入库人员( 工号 )',
 						key: 'empName2',
 						align: 'center',
 					},{
@@ -165,10 +165,10 @@
 							itemdata.inRepoState = '未入库'
 						}
 						
-						itemdata.empName1 = itemdata.empName1+" ( "+itemdata.employeeId1+" )";
+						itemdata.empName1 = itemdata.empName1+" ("+itemdata.employeeId1+")";
 						
 						if(itemdata.empName2 != null || itemdata.employeeId2 != null){
-							itemdata.empName2 = itemdata.empName2+" ( "+itemdata.employeeId2+" )";
+							itemdata.empName2 = itemdata.empName2+" ("+itemdata.employeeId2+")";
 						}else{
 							itemdata.empName2 = "";
 						}

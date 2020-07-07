@@ -99,7 +99,7 @@
 		
 		<!-- 商品条码 -->
 		<label style="font-weight: bold;"  >商品条码：</label>
-		<img :src="Iteminfo.itemCode" width="200px" height="100px" 
+		<img :src="Iteminfo.itemCode" width="321px" height="105px" 
 		 style="float: left;margin-top: 30px;"/>
 	
 	</div>
@@ -315,8 +315,16 @@
 				
 				//添加商品，到后台
 				addItem(item).then(res => {
+					console.log(res);
 					
-					if(res.data != null){
+					if(res.data == -1){
+						
+						this.$Notice.error({
+						   title: '失败',
+						   desc:  '商品 '+this.Iteminfo.itemName+' 已存在'
+						});
+						
+					}else if(res.data != null){
 						
 						this.items = res.data;
 						
