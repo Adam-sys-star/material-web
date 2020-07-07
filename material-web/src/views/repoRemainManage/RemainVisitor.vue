@@ -1,6 +1,6 @@
 <template>
 
-    <chart :options="option" class="echarts" id="chart" style="width: 550px;height: 300px;float: left;"> </chart>
+    <chart :options="option" class="echarts" id="chart" style="width: 550px;height: 300px;"> </chart>
 
 </template>
 
@@ -104,16 +104,16 @@ export default {
     return {
 
 option : {
-    backgroundColor: '#49586e',
+    // backgroundColor: '#49586e',
 	//标题
     title: {
-        text: '商品类别库存分配图',
-        x: '3%',
-        y: '3%',
+        text: '商品类别库存分配统计',
+        x: '27%',
+        y: '0%',
         textStyle: {
-            fontWeight: 'normal',
+            fontWeight: '500',
             fontSize: 20,
-            color: '#fff',
+            color: '#7e7e7e',
         }
     },
 	//环单选项

@@ -50,8 +50,10 @@
 		<Page :total="pageNum" ref="pageno" :page-size="pageSize" show-elevator @on-change="onChange" />
 		
 		<br /><br />
-		<remain-visitor> </remain-visitor>
 		
+		<div class='linear ' style='width:100%;height:300px;' align="center">
+			<remain-visitor> </remain-visitor>
+		</div>
 	</div>
 </template>
 <script>
@@ -360,5 +362,13 @@
 </script>
 
 <style>
-	
+	.linear {
+		width: 100%;
+		height: 600px;
+		FILTER: progid:DXImageTransform.Microsoft.Gradient(gradientType=0, startColorStr=#b8c4cb, endColorStr=red);
+		/*IE 6 7 8*/
+		background: -webkit-gradient(linear, 0% 0%, 0% 150%, from(#EFF0F4), to(#7a7a7a));
+		/*谷歌*/
+	}
+
 </style>
