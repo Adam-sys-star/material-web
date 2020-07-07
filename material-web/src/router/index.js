@@ -103,6 +103,7 @@ export const asyncRouterMap = [
 				  // {path: 'Turnover',name: '会员账号管理',icon:'ios-analytics',component: _import('member/MemberManage')},
 				  {path: 'Turnover',name: '营业额统计',icon:'ios-analytics',component: _import('statistics/Turnover')},
 				  {path: 'Bestseller',name: '畅销榜',icon:'ios-analytics',component: _import('statistics/Bestseller')}]
+
 		},
       {path: '/sale_list',name: '销售记录',icon:"android-list",meta: { role:["超级管理员"] },component: _import('goodsSale/SaleList')},
 	  

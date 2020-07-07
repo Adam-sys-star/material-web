@@ -1,6 +1,6 @@
 <template>
 
-<div id="calendar">
+<div id="calendar" style="width: 500px;">
     <!-- 年份 月份 -->
     <div class="month">
         <ul>

@@ -11,6 +11,9 @@
 	import {
 		searchItem
 	} from '@/api/searchItem.js';
+	import {
+		getAllClass
+	} from '@/api/sale.js'
 	import{findSupplierNameByItemId} from '../../api/order.js';
 	import {findInPriceByItemIdAndSupplierName} from '../../api/order.js'
 	import Vue from 'vue';
@@ -44,9 +47,14 @@
 					},
 					{
 						title: '商品类别',
-						key: 'itemClassName',
+						key: 'itemClassId',
 						// width:150,
 						align: 'center',
+						render: (h, params) => {
+							return h('div',
+								this.classMap.get(params.row.itemClassId)
+							)
+						},
 					}, {
 						title: '生产厂家',
 						key: 'itemFactoryName',
@@ -116,10 +124,11 @@
 				],
 				itemData: [],
 				addedItem: [],
-				
+				classMap:{}
 			};
 		},
 		created: function() {
+			this.reloadClassData()
 			search("").then(res => {
 				this.itemData = res.data;
 				console.log("商品搜索结果", res)
@@ -139,39 +148,31 @@
 				});
 				console.log("keyWord", keyWord)
 			},
+			reloadClassData: function() {
+				getAllClass().then(res => {
+					var classList = res.data
+					this.classMap = new Map([]);
+					for (var i = 0; i < classList.length; i++) {
+						this.classMap.set(classList[i].id, classList[i].itemClassName)
+					}
+					console.log("商品类别列表信息", res.data);
+				}).catch(function(error) {
+					console.log(error);
+				});
+			},
 			addItem: function(index) {
 				var supplierName=[];
 				findSupplierNameByItemId(this.itemData[index].id).then(res=>{
-					console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-					// var supplierName={};
 					supplierName=res.data;
 					console.log("supplierName",supplierName);
 					Vue.set(this.itemData[index],'supplierName',supplierName);
 					// 向父组件传递数据
-					console.log("cccccccccccccccccccccccc")
 					this.$emit('addItemInfo', this.itemData[index]);
 					this.itemData.splice(index, 1);
 					this.addedItem.push(this.itemData[index]);
 				}).catch(function(error){
 					console.log(error);
 				})
-				/* // 向父组件传递数据
-				console.log("cccccccccccccccccccccccc")
-				this.$emit('addItemInfo', this.itemData[index]);
-				this.itemData.splice(index, 1);
-				this.addedItem.push(this.itemData[index]); */
-				// console.log("hahahhahhahahha",supplierName[0]);
-				/* findInPriceByItemIdAndSupplierName(this.itemData[index].id,supplierName[0]).then(res=>{
-					var inPrice={};
-					inPrice=res.data;
-					
-					Vue.set(this.itemData[index],'inPrice',inPrice);
-					console.log("zzzzzzzzzzzzzzzzzzzzz",inPrice);
-				}).catch(function(error){
-					
-					console.log(error);
-				}) */
-				
 			},
 			// 两个数组取差集
 			getDifferenceSet: function(arr1, arr2, typeName) {

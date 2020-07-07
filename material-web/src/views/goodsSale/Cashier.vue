@@ -84,7 +84,7 @@
 		getMemberInfo
 	} from '@/api/member.js'
 	import {
-		settlement,
+		settlement,getAllClass
 	} from '@/api/sale.js'
 	import {
 		arrayReCreate
@@ -170,7 +170,8 @@
 										props: {
 											type: "number",
 											value: param.row.count,
-											min: 1
+											min: 1,
+											max: param.row.stock,
 										},
 
 										on: {
@@ -207,7 +208,12 @@
 					},
 					{
 						title: '商品类别',
-						key: 'address'
+						key: 'itemClassId',
+						render: (h, params) => {
+							return h('div',
+								this.classMap.get(params.row.itemClassId)
+							)
+						},
 					},
 					{
 						title: '生产厂家',
@@ -236,7 +242,8 @@
 						}
 					}
 				],
-				itemData: []
+				itemData: [],
+				classMap:{}
 			}
 		},
 		created: function() {
@@ -257,6 +264,7 @@
 					console.log("div之外s")
 				}
 			})
+			this.reloadClassData()
 			store.dispatch('GetInfo').then(res => { // 拉取user_info
 				console.log("操作员信息", res)
 				this.emp = res.data;
@@ -265,6 +273,19 @@
 		methods: {
 			gotoView: function(path) {
 				this.$router.replace(path)
+			},
+			//导入员工数据，用于显示时替换员工id
+			reloadClassData: function() {
+				getAllClass().then(res => {
+					var classList = res.data
+					this.classMap = new Map([]);
+					for (var i = 0; i < classList.length; i++) {
+						this.classMap.set(classList[i].id, classList[i].itemClassName)
+					}
+					console.log("商品类别列表信息", res.data);
+				}).catch(function(error) {
+					console.log(error);
+				});
 			},
 			loadMemberInfo: function() {
 				getMemberInfo(this.memberTelp).then(res => {

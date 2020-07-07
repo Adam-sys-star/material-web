@@ -187,7 +187,11 @@
 			},
 			saveModify: function() {
 				let finalData = this.unique(this.modifyData);
-				saveModify(finalData);
+				saveModify(finalData).then(res=>{
+					alert("保存成功")
+				}).catch(error=>{
+					alert("保存失败")
+				});
 				
 				console.log(finalData);
 			},
