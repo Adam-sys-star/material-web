@@ -42,6 +42,13 @@ export function settlement(itemSale,itemData) {
 		data
 	});
 }
+export function getAllClass() {
+	return fetch({
+		url: '/material/item/getItemClass',
+		method: 'get',
+		params:{}
+	});
+}
 
 
 export function backSake(id) {
