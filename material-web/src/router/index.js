@@ -87,6 +87,7 @@ export const asyncRouterMap = [
 		]
 	  },
 	  {path: '/employees',name: '员工信息',icon:'ios-list-outline',component: _import('employees/Employees')},
+	   {path: '/suppliers',name: '供应商信息',icon:'ios-list-outline',component: _import('suppliers/supplier')},
       {path: '/tabledetail/:id',name: 'TableDetail', hidden:true, component: _import('TableDetail')},
       // {path: '/tinymce',name: 'Tinymce编辑器',icon:"android-document",component: _import('Tinymce')},
       {path: '/member',name: '会员管理',icon:"android-list",

@@ -17,3 +17,11 @@ export function getReceiveDetailByReceiveId(receiveId,pageNum){
 		params:{receiveId,pageNum}
 	})
 }
+
+export function toConfirmReceive(receiveId,empId){
+	return fetch({
+		url:'/material/receive/confirmReceive',
+		method:'get',
+		params:{receiveId,empId}
+	})
+}
