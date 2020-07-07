@@ -1,7 +1,7 @@
 <template>
 
     <chart :options="option" class="echarts" id="chart" 
-	style="margin-left: 40px;width: 350px;height: 400px;float: left;"> </chart>
+	style="margin-left: 40px;margin-top: 10px;width: 350px;height: 390px;float: left;"> </chart>
 
 </template>
 
@@ -118,8 +118,8 @@ option : {
 	// 标题
     title: {
         text: '批次:',
-        x: '6%',
-        y: '75%',
+        x: '5%',
+        y: '77%',
         textStyle: {
             fontWeight: 'normal',
             fontSize: 20,
@@ -135,8 +135,8 @@ option : {
 	//选项卡
     legend: {
         orient: 'vertical',
-        left: '22%',
-        top: '75%',
+        left: '21%',
+        top: '77%',
         textStyle: {
             fontWeight: 'normal',
             fontSize: 18,
@@ -149,7 +149,7 @@ option : {
     series: [{
         type: 'pie',
         selectedMode: 'single',
-        center: ['50%', '37%'],
+        center: ['50%', '39%'],
         radius: ['40%', '80%'],
         color: ['#FA5858', '#FAAC58', '#F4FA58', '#ACFA58','#82FA58',
 		 '#58FAAC', '#58FAF4','#58ACFA','#5858FA','#AC58FA'],

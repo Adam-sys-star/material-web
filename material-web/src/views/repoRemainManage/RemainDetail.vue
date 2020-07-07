@@ -20,7 +20,7 @@
 						<label style="" class="topLable" >{{RemainInfo.itemClassName}}</label> 
 					</Col>
 				</Row>
-				<Row>
+				<Row style="margin-top: 10px;">
 					<Col span="5">
 						<label style="" class="topTitleLable" >生产厂家：</label>
 						<label style="" class="topLable" >{{RemainInfo.itemFactoryName}}</label>
@@ -59,18 +59,18 @@
 				
 				<Row style="margin-top: 25px;">
 					<Col span="8">
-						<label style="" class="topTitleLable" >库存情况：</label>
+						<label style="margin-top: 5px;" class="topTitleLable" >库存情况：</label>
 						<Select v-model="RemainDetail.remainStatus" style="float: left;width: 100px;" filterable 
 								:label-in-value="true"  @on-change="value=>{selectChange(value)}"   >
 							<Option v-for="item in remainList" :value="item.value" :key="item.value" >{{ item.label }}</Option>
 						</Select>
-						<label style="margin-left: 6px;width: 18px;" class="topTitleLable" > <= </label>
+						<label style="margin-top: 5px;margin-left: 6px;width: 18px;" class="topTitleLable" > <= </label>
 						<Input type="text" v-model="RemainDetail.totalRemain" placeholder="库存数量" id="totalRemain" search
 						  clearable style="float: left;width: 100px;margin-left: 5px;" :disabled="isDisabled" >
 						</Input>
 					</Col>
 					<Col span="8">
-						<label style="" class="topTitleLable" >&nbsp;供 应 商 ：</label>
+						<label style="margin-top: 5px;" class="topTitleLable" >&nbsp;供 应 商 ：</label>
 						<Select v-model="RemainDetail.supplierId" style="float: left;width: 194px;"  clearable
 						 placeholder="选择供应商" filterable>
 							<Option v-for="item in supplierlist" :value="item.value" :key="item.value" >{{ item.label }}</Option>
@@ -79,12 +79,12 @@
 				</Row>
 				<Row style="margin-top: 15px;">
 					<Col span="8">
-						<label style="" class="topTitleLable" >时间范围：</label>
+						<label style="margin-top: 5px;" class="topTitleLable" >时间范围：</label>
 						<DatePicker type="daterange" split-panels v-model="RemainDetail.inRepoDate" format="yyyy-MM-dd"
 						 placeholder="选择入库的时间范围" style="float:left;width: 230px;" ></DatePicker>
 					</Col>
 					<Col span="8">
-						<label style="" class="topTitleLable" >入库批次：</label>
+						<label style="margin-top: 5px;" class="topTitleLable" >入库批次：</label>
 						<Select v-model="RemainDetail.times" style="float: left;width: 90px;" clearable
 						 placeholder="选择批次" filterable>
 							<Option v-for="item in timeslist" :value="item.value" :key="item.value" >{{ item.value }}</Option>
