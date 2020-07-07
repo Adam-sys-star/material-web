@@ -131,10 +131,6 @@
 						}
 					},
 					{
-						title: '会员龄',
-						key: 'saleAfterDiscount'
-					},
-					{
 						title: '至今总消费金额（元）',
 						key: 'memberAmountMoney'
 					},
