@@ -11,12 +11,6 @@
 				</Col>
 				<Col span="7">
 				<FormItem label="商品类别">
-					<!-- <Select v-model="formItem.itemClass">
-						<Option value="beijing">New York</Option>
-						<Option value="shanghai">London</Option>
-						<Option value="shenzhen">Sydney</Option>
-					</Select> -->
-					<!-- 商品类别 -->
 					<Cascader :data="itemclass" change-on-select  v-model="formItem.itemClass" placeholder="请选择商品类别" filterable
 					 style="width: 200px;" ></Cascader>
 				</FormItem>
