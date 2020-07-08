@@ -29,7 +29,7 @@
 		style="height: 32px;margin-left: 100px;width: 75px;float: left;"  icon="ios-search">搜 索</Button>
 		
 		<Button type="success" @click="addInRepositoryDetail"
-		style="height: 32px;margin-left: 22px;width: 100px;float: left;" >✔ 确认入库</Button>
+		style="height: 32px;margin-left: 22px;width: 100px;float: left;" :disabled=isDisabled >✔ 确认入库</Button>
 		
 		<br /><br /><br />
 		
@@ -55,9 +55,12 @@
 						label:"一号仓库"
 					}
 				],
+				isDisabled:false,
 				pageNum:100,
 				pageNo:1,
 				pageSize:10,
+				textvalue:[],
+				selectvalue:"",
 				InRepoDetail:{
 					//收货编号
 					receId:"",
@@ -120,9 +123,9 @@
 						render: (h, params) => {
 							return h('div',
 							{props: {}},[
-							//文本框
+							//文本框,value:params.row.itemsNumber
 							h('Input', {
-								props: {type: 'text',size: 'big',placeholder:"数量"},
+								props: {type: 'text',size: 'big',placeholder:"数量",disabled:this.isDisabled,value:this.textvalue[params.index]},
 								style: {width:"80px",height :"30px"},
 								on: {
 									'on-enter': event => {
@@ -190,7 +193,7 @@
 							}),
 							//选择器
 							h('Select', {
-							  props: {size: 'big',placeholder:"选择仓库"},
+							  props: {size: 'big',placeholder:"选择仓库",disabled:this.isDisabled,value:this.selectvalue},
 							  style: {width:"85px",marginLeft:"5px"},
 							  on: {
 								'on-change': e => {
@@ -263,11 +266,18 @@
 				
 				
 				addInRepositoryDetail(this.inRepoList).then(res => {
-					alert(res.data)
 					if(res.data == true){
-						alert()
+						this.$Notice.success({
+							title: '成功',
+							desc:  '商品入库成功'
+						 });
+						this.$router.push("./selectInRepo");
+					}else{
+						this.$Notice.error({
+							title: '错误',
+							desc:  '商品入库失败'
+						 });
 					}
-					
 				});
 				
 			},
@@ -324,6 +334,19 @@
 					//页数赋值
 					this.pageNum = res.data.total
 					
+					//如果是已经入库了
+					if(this.InRepoDetail.inRepoState == 1){
+						
+						for(let i = 0;i < InRepoDetails.length; i++){
+							
+							this.textvalue.push(InRepoDetails[i].itemsNumber);
+							
+							this.selectvalue = 1;
+							
+						}
+						
+					}
+					
 					//遍历表格数据
 					this.inRepoInfos = InRepoDetails.map(item => {
 						return {
@@ -360,6 +383,13 @@
 				}
 				
 				this.InRepoDetail.inRepoState = inRepoState;
+				
+				//修改样式
+				if(inRepoState == 1){
+					
+					this.isDisabled = true;
+					
+				}
 				
 			},
 		},
