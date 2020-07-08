@@ -43,7 +43,7 @@
 		data() {
 			return {
 				// 商品类别
-					itemClass: "",
+					// itemClass: "",
 					itemclass: [{
 						value: '1',
 						label: '0TC类',
@@ -99,7 +99,7 @@
 						key: 'saleVolume'
 					},
 					{
-						title: '销售额同比增长',
+						title: '销售额环比增长',
 						width: 130,
 						key: 'saleVolumeIncrease'
 					},
@@ -109,7 +109,7 @@
 						key: 'saleNum'
 					},
 					{
-						title: '销售数量同比增长',
+						title: '销售数量环比增长',
 						width: 135,
 						key: 'saleNumIncrease'
 					},
@@ -119,21 +119,10 @@
 						key: 'profit'
 					},
 					{
-						title: '总利润同比增长',
+						title: '总利润环比增长',
 						width: 130,
 						key: 'profitIncrease'
-					},
-
-					// {
-					// 	title: '销售时间',
-					// 	key: 'saleTime',
-					// 	render: (h, params) => {
-					// 		return h('div',
-					// 			formatDate(new Date(params.row.saleTime), 'yyyy-MM-dd hh:mm')
-					// 		)
-					// 	},
-					// 	sortable: true
-					// }
+					}
 				],
 				turnoverData: [],
 			}
@@ -144,6 +133,9 @@
 			this.searchItemClass();
 		},
 		methods: {
+			test(){
+				console.log(this.formItem.itemClass);
+				},
 			reloadData: function(res) {
 				let data = {
 					...this.formItem

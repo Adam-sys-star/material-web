@@ -126,7 +126,7 @@
 						width: 150,
 						render: (h, params) => {
 							return h('div',
-								formatDate(new Date(params.row.memberRegTime), 'yyyy-MM-dd hh:mm')
+								formatDate(new Date(params.row.memberRegTime), 'yyyy-MM-dd')
 							)
 						}
 					},
