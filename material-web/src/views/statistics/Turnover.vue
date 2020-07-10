@@ -89,7 +89,7 @@
 						key: 'cost'
 					},
 					{
-						title: '成本同比增长',
+						title: '成本环比增长',
 						width: 120,
 						key: 'costIncrease'
 					},

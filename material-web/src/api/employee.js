@@ -5,7 +5,7 @@ export function getAllEmp(){
 	return fetch({
 	  url: '/material/emp/findAllEmp',
 	  method: 'get',
-
+		
 	});
 }
 

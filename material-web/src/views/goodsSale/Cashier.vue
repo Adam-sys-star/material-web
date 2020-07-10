@@ -1,16 +1,84 @@
 <template>
 	<div>
+		<Modal v-model="modal2" title="确认结算" width="300px" :styles="{top: '60px'}" @on-ok="ok" @on-cancel="cancel">
+			<p slot="header" style="color:#f60;text-align:center">
+				<Icon type="ios-information-circle"></Icon>
+				<span width="100px">确认结算？</span>
+			</p>
+			<div style="text-align:center">
+				<p>请确认是否结算</p>
+				<p>应收:{{finalPrice}} 元</p>
+				<p>实收:{{income}} 元</p>
+				<p>找零:{{backMoney}} 元</p>
 
-		<h1 style="font-size: 60px;">收银台</h1>
-		<!-- <Modal v-model="modal1" title="商品数量" width="300" @on-ok="ok" @on-cancel="cancel">
-			<Input v-model="itemCount" placeholder="请输入商品数量" style="width: 25%" />
-			<div slot="footer"></div>
-		</Modal> -->
-
+			</div>
+			<div slot="footer">
+				<Button type="success" long :loading="modal_loading" @click="settlement">结算</Button>
+			</div>
+		</Modal>
+		<Row>
+			<Col span=6 offset=1 style="text-align:left">
+			<Row>
+				<Col span=24>
+				<h3 style="font-size: 24px; font-weight: 300;text-align:left">总共金额:{{total}}元</h3>
+				</Col>
+			</Row>
+			<Row>
+				<Col span=24>
+				<h3 style="font-size: 24px; font-weight: 300;">优惠金额:{{totalDiscount}} 元</h3>
+				</Col>
+			</Row>
+			<Row>
+				<Col span=24>
+				<h3 style="font-size: 24px; font-weight: 300;">折后金额:{{finalPrice}} 元</h3>
+				</Col>
+			</Row>
+			</Col>
+			<Col span=10>
+			<Row>
+				<Col span=24>
+				<h1 style="font-size: 50px;">收银台</h1>
+				</Col>
+			</Row>
+			<Row>
+				<Col span=10>
+				<label style="text-align: left;font-size: 16px;">{{memberTelp1}}</label>
+				</Col>
+				<Col span=6>
+				<label style="text-align: center;font-size: 16px;">{{memberName}}</label>
+				</Col>
+				<Col span=6>
+				<label style="text-align: left;font-size: 16px;">{{memberClass}}</label>
+				</Col>
+			</Row>
+			</Col>
+			<Col span=5 style="text-align:left">
+			<Row>
+				<Col span=24>
+				<h3 style="font-size: 24px; font-weight: 300;">应收:{{finalPrice}} 元</h3>
+				</Col>
+			</Row>
+			<Row>
+				<Col span=24>
+				<h3 style="font-size: 24px; font-weight: 300;">实收:{{income}} 元</h3>
+				</Col>
+			</Row>
+			<Row>
+				<Col span=24>
+				<h3 style="font-size: 24px; font-weight: 300;">找零:{{backMoney}} 元</h3>
+				</Col>
+			</Row>
+			</Col>
+			<Col span=2>
+			<Button type="primary" style="content: inherit; margin-top: 1px; width: 90px; height: 61px;" v-on:click="settlementComfirm">
+				<span style="font-size: 28px; font-weight: 900;">结算</span></Button>
+			</Col>
+		</Row>
+		<br />
 		<Row>
 			<Col span=15>
 			<!-- <div id="searchField"> -->
-			<Input id="searchInput" v-model="keyWord" placeholder="请输入商品编号/拼音码/五笔码" style="width: 90%" @on-focus="showSearchInfo"
+			<Input id="searchInput" v-model="keyWord" placeholder="请输入商品编号或商品名" style="width: 90%" @on-focus="showSearchInfo"
 			 @on-change="searchItem" />
 			<div :style="uiStyle" id="searchField" v-show="showSearch">
 				<SearchTable :keyWord="keyWord" @addItemInfo="addItemToCart"></SearchTable>
@@ -49,31 +117,10 @@
 			</Col>
 		</Row>
 
-		<Row>
-			<Col span=6>
-			<label style="text-align: left;font-size: 16px;">{{memberTelp1}}</label>
-			</Col>
-			<Col span=6>
-			<label style="text-align: center;font-size: 16px;">{{memberName}}</label>
-			</Col>
-			<Col span=6>
-			<label style="text-align: left;font-size: 16px;">{{memberClass}}</label>
-			</Col>
-
-		</Row>
-		<!-- <p  style="width: 70%;font-size: 24px;white-space:nowrap; ">
-
-		</p> -->
 		<div width="90%">
 			<Table border :columns="header" :data="itemData" height="350"></Table>
 		</div>
-		<div style="display: flex; justify-content: space-between;">
-			<h3 style="font-size: 24px; font-weight: 900; margin-left: 5%;">总金额:{{total}} 元</h3>
-			<h3 style="font-size: 24px; font-weight: 900; margin-left: 5%;">优惠金额:{{totalDiscount}} 元</h3>
-			<h3 style="font-size: 24px; font-weight: 900; margin-left: 5%;">折后价:{{finalPrice}} 元</h3>
-			<Button size="large" type="primary" style="margin-right: 15%; margin-top: 1px;" v-on:click="settlement">结算</Button>
-		</div>
-
+		<br />
 	</div>
 
 </template>
@@ -84,7 +131,8 @@
 		getMemberInfo
 	} from '@/api/member.js'
 	import {
-		settlement,getAllClass
+		settlement,
+		getAllClass
 	} from '@/api/sale.js'
 	import {
 		arrayReCreate
@@ -105,6 +153,7 @@
 		inject: ['reload'],
 		data() {
 			return {
+				modal2: false,
 				memberTelp: '',
 				memberTelp1: '',
 				memberName: '',
@@ -113,6 +162,8 @@
 				total: 0,
 				totalDiscount: 0,
 				finalPrice: 0,
+				income: 0,
+				backMoney: 0,
 				keyWord: '',
 				showSearch: false,
 				uiStyle: {
@@ -243,7 +294,7 @@
 					}
 				],
 				itemData: [],
-				classMap:{}
+				classMap: {}
 			}
 		},
 		created: function() {
@@ -273,6 +324,7 @@
 		methods: {
 			gotoView: function(path) {
 				this.$router.replace(path)
+
 			},
 			//导入员工数据，用于显示时替换员工id
 			reloadClassData: function() {
@@ -291,10 +343,21 @@
 				getMemberInfo(this.memberTelp).then(res => {
 					this.memberRes = res.data
 					if (this.memberRes.member != null) {
-						this.memberName = '顾客名称：' + this.memberRes.member.memberName;
+						this.memberName = '顾客：' + this.memberRes.member.memberName;
 						this.memberTelp1 = '手机号：' + this.memberRes.member.memberTelp;
-						this.memberClass = '会员类型：' + this.memberRes.memberClass.memberClassName;
+						this.memberClass = '会员：' + this.memberRes.memberClass.memberClassName;
 						this.discount = this.memberRes.memberClass.memberClassDiscount
+						// 重新计算优惠信息
+						for (var i = 0; i < this.itemData.length; i++) {
+							var obj = this.itemData[i];
+							if (obj.itemDiscState == 1) {
+
+								obj.saleAfterDiscount = Math.round(obj.totalAmount * this.discount * 100 * obj.count) / 100
+								obj.saleDiscountAmount = numberSub(obj.totalAmount, obj.saleAfterDiscount);
+								this.totalDiscount = numberAdd(obj.saleDiscountAmount, this.totalDiscount);
+							}
+						}
+						this.finalPrice = numberSub(this.total, this.totalDiscount);
 					} else {
 						this.memberTelp = '';
 						this.memberTelp1 = '';
@@ -327,6 +390,13 @@
 					this.$message.error(err);
 				});
 			},
+			// 结算确认
+			settlementComfirm() {
+				this.income = Math.ceil(this.finalPrice / 100) * 100;
+				this.backMoney = numberSub(this.income, this.finalPrice);
+				this.modal2 = true;
+			},
+
 			// 结算创建销售单
 			settlement: function() {
 				const itemSale = {
@@ -345,13 +415,12 @@
 					["itemId", 'id']
 				]);
 				var newItemData = arrayReCreate(this.itemData, map);
-
-				// 商品数组（数量，定价，优惠金额）
+				this.modal2 = false;;
+				// 商品数组（销售单，销售单详情）
 				settlement(itemSale, newItemData).then(res => {
 					alert('结算成功');
 					this.reload();
 				});
-				// settlement("会员id","员工id",16.50,60.50,77.00);
 				console.log("结算中", this.itemData);
 			},
 			// 计算收银台的价格变化
@@ -406,7 +475,7 @@
 			},
 			remove(index) {
 				var obj = this.itemData[index];
-				var moneyChange = -(numberMul(obj.count , obj.itemSalePrice));
+				var moneyChange = -(numberMul(obj.count, obj.itemSalePrice));
 				this.recalculation(moneyChange, obj.itemDiscState == 1);
 				this.itemData.splice(index, 1);
 			}
@@ -414,6 +483,6 @@
 	}
 </script>
 
-<style scoped>
+<style>
 
 </style>

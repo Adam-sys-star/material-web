@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h1 style="font-size: 60px; text-align: center;">会员管理</h1>
+		<!-- <h1 style="font-size: 60px; text-align: center;">会员管理</h1> -->
 
 		<Modal v-model="modal2" title="确认删除" width="300px"
 		 :styles="{top: '60px'}" @on-ok="ok" @on-cancel="cancel">
@@ -61,7 +61,7 @@
 		</Modal>
 
 		<Row>
-			<div style="width: 80%;">
+			<div style="width: 90%;">
 				<Button v-on:click="registerView" type="warning" style="float: right;">注册会员</Button>
 			</div>
 		</Row>

@@ -6,8 +6,7 @@ import vue from 'vue';
 
 const service = axios.create({
   baseURL: process.env.BASE_API, // api的base_url
-  timeout: 9999999999,                  // 请求超时时间
-  crossDomain: true,
+  timeout: 5000,                  // 请求超时时间  crossDomain: true,
   withCredentials: true
 });
 

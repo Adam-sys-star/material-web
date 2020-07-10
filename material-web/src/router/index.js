@@ -104,8 +104,8 @@ export const asyncRouterMap = [
 			  children:[
 				  // {path: 'Turnover',name: '会员账号管理',icon:'ios-analytics',component: _import('member/MemberManage')},
 				  {path: 'Turnover',name: '营业额统计',icon:'ios-analytics',component: _import('statistics/Turnover')},
+				  {path: 'test',name: '营业额统计-视图',icon:'ios-analytics',component: _import('statistics/TurnoverVisua')},
 				  {path: 'Bestseller',name: '畅销榜',icon:'ios-analytics',component: _import('statistics/Bestseller')}
-				  // {path: 'test',name: '测试',icon:'ios-analytics',component: _import('statistics/ItemClass')},
 					]
 
 		},
@@ -131,18 +131,18 @@ export const asyncRouterMap = [
 	  //                {path: 'upload',name: 'Upload上传',icon:'ios-cloud-upload-outline',component: _import('components/Upload')},
 	  //              ]
 	  //  },
-	   //  {path: '/charts',name: 'echart图表', icon:'pie-graph',
-	   //   component: {render (c) { return c('router-view') }},
-	   //   children: [ {path: 'shopchart',name: '商场统计图表',icon:'stats-bars',component: _import('charts/ShopChart'), hidden:false, },
-	   //               {path: 'radarchart',name: '雷达图',icon:'arrow-graph-up-right',component: _import('charts/RadarChart')},
-	   //               {path: 'cakechart',name: '蛋糕销量图表',icon:'ios-analytics',component: _import('charts/CakeChart')},
-				// 	 // {path: 'salechart',name: 'salechart ',icon:'ios-analytics',component: _import('charts/SaleChart')},
-				// 	 // {path: 'DashChartLarge',name: 'DashChartLarge',icon:'ios-analytics',component: _import('charts/DashChartLarge')},
-				// 	 // {path: 'DashChartVisitor',name: 'DashChartVisitor',icon:'ios-analytics',component: _import('charts/DashChartVisitor')},
-				// 	 // {path: 'IntroChartCount',name: 'IntroChartCount',icon:'ios-analytics',component: _import('charts/IntroChartCount')},
-				// 	 // {path: 'IntroChartPie',name: 'IntroChartPie',icon:'ios-analytics',component: _import('charts/IntroChartPie')},
-				//    ]
-	   // },
+	    {path: '/charts',name: 'echart图表', icon:'pie-graph',
+	     component: {render (c) { return c('router-view') }},
+	     children: [ {path: 'shopchart',name: '商场统计图表',icon:'stats-bars',component: _import('charts/ShopChart'), hidden:false, },
+	                 {path: 'radarchart',name: '雷达图',icon:'arrow-graph-up-right',component: _import('charts/RadarChart')},
+	                 {path: 'cakechart',name: '蛋糕销量图表',icon:'ios-analytics',component: _import('charts/CakeChart')},
+					 // {path: 'salechart',name: 'salechart ',icon:'ios-analytics',component: _import('charts/SaleChart')},
+					 // {path: 'DashChartLarge',name: 'DashChartLarge',icon:'ios-analytics',component: _import('charts/DashChartLarge')},
+					 // {path: 'DashChartVisitor',name: 'DashChartVisitor',icon:'ios-analytics',component: _import('charts/DashChartVisitor')},
+					 // {path: 'IntroChartCount',name: 'IntroChartCount',icon:'ios-analytics',component: _import('charts/IntroChartCount')},
+					 // {path: 'IntroChartPie',name: 'IntroChartPie',icon:'ios-analytics',component: _import('charts/IntroChartPie')},
+				   ]
+	   },
 	   // {path: '/markdown',name: 'Markdown',icon:"android-list",component: _import('Markdown')},
 	   // {path: '/introduction',name: '介绍',icon:'thumbsup',component: _import('Introduction')},
 	   // {path: '/table', name: '表格综合实例',icon:'ios-paper',component: _import('Table'),meta: { role:["超级管理员"] }},

@@ -1,7 +1,7 @@
 <template>
 	<div width="90%" :styles="{top: '50px'}">
-		<h1 style="font-size: 60px; text-align: center;">销售记录</h1>
-		<br>
+		<!-- <h1 style="font-size: 60px; text-align: center;">销售记录</h1> -->
+		<br/>
 		<Modal v-model="modal1" title="销售单明细" width="1000px"
 		 @on-ok="ok" @on-cancel="cancel" :styles="{top: '60px'}">
 			<SaleDetail :itemSaleId="itemSaleId"></SaleDetail>
@@ -74,7 +74,7 @@
 				key: "",
 				startTime: null,
 				endTime: null,
-				backSaleState:2,
+				backSaleState:1,
 				modal1: false,
 				itemSaleId: '',
 				modal2: false,

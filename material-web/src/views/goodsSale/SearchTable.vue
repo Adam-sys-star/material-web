@@ -86,6 +86,11 @@
 						key: 'itemDiscState',
 						// width:100,
 						align: 'center',
+						render: (h, params) => {
+							return h('div',
+								this.formatDate(params.row.itemDiscState)
+							)
+						}
 					},
 					{
 						title: '操作',
@@ -138,6 +143,13 @@
 			console.log("keyWord", keyWord)
 		},
 		methods: {
+			formatDate:function(va){
+				if(va==1){
+					return "是"
+				}else{
+					return "否"
+				}
+			},
 			reloadData: function(keyWord) {
 				search(keyWord).then(res => {
 					this.itemData = res.data;
