@@ -348,6 +348,7 @@
 
 				// 商品数组（数量，定价，优惠金额）
 				settlement(itemSale, newItemData).then(res => {
+					alert('结算成功');
 					this.reload();
 				});
 				// settlement("会员id","员工id",16.50,60.50,77.00);
@@ -405,7 +406,7 @@
 			},
 			remove(index) {
 				var obj = this.itemData[index];
-				var moneyChange = -(obj.count * obj.itemSalePrice);
+				var moneyChange = -(numberMul(obj.count , obj.itemSalePrice));
 				this.recalculation(moneyChange, obj.itemDiscState == 1);
 				this.itemData.splice(index, 1);
 			}

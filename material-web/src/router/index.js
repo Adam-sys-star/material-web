@@ -104,7 +104,9 @@ export const asyncRouterMap = [
 			  children:[
 				  // {path: 'Turnover',name: '会员账号管理',icon:'ios-analytics',component: _import('member/MemberManage')},
 				  {path: 'Turnover',name: '营业额统计',icon:'ios-analytics',component: _import('statistics/Turnover')},
-				  {path: 'Bestseller',name: '畅销榜',icon:'ios-analytics',component: _import('statistics/Bestseller')}]
+				  {path: 'Bestseller',name: '畅销榜',icon:'ios-analytics',component: _import('statistics/Bestseller')}
+				  // {path: 'test',name: '测试',icon:'ios-analytics',component: _import('statistics/ItemClass')},
+					]
 
 		},
       {path: '/sale_list',name: '销售记录',icon:"android-list",meta: { role:["超级管理员"] },component: _import('goodsSale/SaleList')},
@@ -161,7 +163,7 @@ export const asyncRouterMap = [
   
 
 
-  {path: '*', redirect: '/pages/404', hidden: true },
+  // {path: '*', redirect: '/pages/404', hidden: true },
   {path: '/cashier',name: '收银台',icon:"android-list",component: _import('Cashier')},
   {path: '/saleList',name: '销售列表',icon:"android-list",component: _import('goodsSale/SaleList')},
   {path: '/saleDetail',name: '销售明细',icon:"android-list",component: _import('goodsSale/SaleDetail')},

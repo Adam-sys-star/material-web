@@ -6,6 +6,7 @@ import 'nprogress/nprogress.css'// Progress 进度条样式
 
 // permissiom judge
 function hasPermission(roles, permissionRoles) {
+	
   if (roles.indexOf('超级管理员') >= 0) return true // admin权限 直接通过
   if (!permissionRoles) return true
   return roles.some(role => permissionRoles.indexOf(role) >= 0)
@@ -16,6 +17,8 @@ const whiteList = ['/login', '/authredirect']// 不重定向白名单
 router.beforeEach((to, from, next) => {
   NProgress.start() // 开启Progress
   if (store.getters.token) { // 判断是否有token
+		console.log("to.path1",to.path)
+	
     if (to.path === '/login') {
       next({ path: '/' })
     } else {
@@ -37,13 +40,13 @@ router.beforeEach((to, from, next) => {
       } else {
         
         store.dispatch('getNowRoutes', to);
-
+				console.log("to",to)
         if (hasPermission(store.getters.roles, to.meta.role)) {
           next()//
 
           console.log("has userinfo")
         } else {
-          next({ path: '/', query: { noGoBack: true }})
+          next({ path: '/cashier', query: { noGoBack: true }})
         }
       }
     }

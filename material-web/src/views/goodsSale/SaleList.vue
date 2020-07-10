@@ -97,6 +97,7 @@
 					{
 						title: '操作员',
 						key: 'employeeId',
+						width: 100,
 						render: (h, params) => {
 							return h('div',
 								this.empMap.get(params.row.employeeId)
@@ -127,6 +128,7 @@
 					{
 						title: '销售时间',
 						key: 'saleTime',
+						width:150,
 						render: (h, params) => {
 							return h('div',
 								formatDate(new Date(params.row.saleTime), 'yyyy-MM-dd hh:mm')
