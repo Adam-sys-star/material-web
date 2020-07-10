@@ -13,6 +13,7 @@
 	import {getReceiveDetailByReceiveId} from '../../api/receive.js';
 	import {toConfirmReceive} from '../../api/receive.js';
     export default {
+		inject: ['reload'],
         data () {
             return {
                 columns7: [
@@ -60,6 +61,7 @@
 			    var receiveId = this.$route.query.id;
 			   toConfirmReceive(receiveId,this.emp.id).then(res=>{
 				   alert("收货成功");
+				   this.reload();
 			   }).catch(err=>{
 				   console.log(err);
 			   })

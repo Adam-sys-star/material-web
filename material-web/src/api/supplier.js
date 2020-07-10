@@ -3,7 +3,8 @@ import fetch from 'utils/fetch';
 
 export function getAllSuppliers(pageNum){
 	return fetch({
-	  url: '/material/supplier/findAllSuppliers',
+	  // url: '/material/supplier/findAllSuppliers',
+	  url: '/material/supplier/findAllSuppliersSql',
 	  method: 'get',
 	  params:{pageNum}
 	});

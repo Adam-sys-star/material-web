@@ -16,13 +16,7 @@ export function dealOrder(empdata,itemData){
 	});
 }
 
-export function getAllOrder(){
-	return fetch({
-	  url: '/material/order/findAllOrder',
-	  method: 'get'
 
-	});
-}
 
 export function findSupplierNameByItemId(itemId){
 	return fetch({
@@ -42,7 +36,8 @@ export function findInPriceByItemIdAndSupplierName(itemId,supplierName){
 
 export function getOrderResp(pageNum){
 	return fetch({
-		url:'/material/order/backOrderRespByPage',
+		// url:'/material/order/backOrderRespByPage',
+		url:'/material/order/backOrderRespsByPageSql',
 		method:'get',
 		params:{pageNum}
 	})
@@ -53,5 +48,24 @@ export function getOrderRespByExample(itemId, itemName,pageNum){
 		url:'/material/order/findOrderRespByExample',
 		method:'get',
 		params:{itemId,itemName,pageNum}
+	})
+}
+
+export function getAllOrder(pageNum){
+	return fetch({
+	  // url: '/material/order/findAllOrder',
+	  url: '/material/order/findAllNewOrderRespBySql',
+	  method: 'get',
+	  params:{pageNum}
+
+	});
+}
+
+export function getOrderDetailRespByOrderId(orderId,pageNum){
+	return fetch({
+		// url:'/material/order/findOrderDetailRespByOrderId',
+		url:'/material/order/findOrderDetailRespByOrderIdSqL',
+		method:'get',
+		params:{orderId,pageNum}
 	})
 }

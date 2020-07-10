@@ -60,7 +60,9 @@ export const asyncRouterMap = [
 	 {path: '/ordes',name: '订单管理', icon:'pie-graph',meta: { role:["订单管理员"] },
 		component: {render (c) { return c('router-view') }},
 		children: [ {path: 'order',name: '药品采购',icon:'stats-bars',component: _import('orders/order'), hidden:false, },
-					{path: 'myorder',name: '订货单明细',icon:'arrow-graph-up-right',component: _import('orders/myOrder')}
+					{path: 'myorder',name: '订货单明细',icon:'arrow-graph-up-right',component: _import('orders/myOrder')},
+					{path: 'orderData',name: '订单',icon:'arrow-graph-up-right',component: _import('orders/orderData')}
+					
 				  ]
 	  
 	  },
@@ -167,6 +169,6 @@ export const asyncRouterMap = [
   {path: '/member_rule',name: '会员规则',icon:"android-list",component: _import('member/MemberRule')},
   {path: '/employeeDetail',name: '员工信息详情',icon:'ios-list-outline',component: _import('employees/EmployeeDetail')},
   {path: '/addEmployee',name: '添加员工',icon:'ios-list-outline',component: _import('employees/AddEmployee')},
-  {path: '/receiveDetail',name: '收货详情列表',icon:'arrow-graph-up-right',component: _import('receives/receiveDetail')}
-  
+  {path: '/receiveDetail',name: '收货详情列表',icon:'arrow-graph-up-right',component: _import('receives/receiveDetail')},
+  {path: '/orderDetail',name: '订单详情',icon:'arrow-graph-up-right',component: _import('orders/orderDetail')}
 ];
